@@ -1,9 +1,12 @@
 import '@/styles/globals.css'
+import { Inter } from "next/font/google"
 
 export const metadata = {
   title: 'Hummingbird',
   description: 'Upload articles and get quick definitions',
 }
+
+const inter = Inter({subsets: ['latin']})
 
 export default function RootLayout({
   children,
@@ -11,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' className={}>
       <body>{children}</body>
     </html>
   )
