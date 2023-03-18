@@ -35,5 +35,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "prettier": "^2.8.8"
   }
 }

@@ -1,12 +1,13 @@
 import '@/styles/globals.css'
-import { Inter } from "next/font/google"
+
+import { fontInter, fontSantaCatarina } from '@/lib/fonts'
+import { cn } from '@/lib/utils'
+import Navbar from '@/components/Navbar'
 
 export const metadata = {
   title: 'Hummingbird',
   description: 'Upload articles and get quick definitions',
 }
-
-const inter = Inter({subsets: ['latin']})
 
 export default function RootLayout({
   children,
@@ -14,8 +15,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en' className={}>
-      <body>{children}</body>
+    <html
+      lang='en'
+      className={cn(
+        'bg-white text-slate-900 antialiased light',
+        fontInter.variable,
+        fontSantaCatarina.variable
+      )}>
+      <body className='min-h-screen pt-12 bg-slate-50 antialiased font-inter'>
+        <Navbar />
+
+        <div className='container max-w-7xl mx-auto h-full pt-12'>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
