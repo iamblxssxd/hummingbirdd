@@ -18,11 +18,11 @@ export default function RootLayout({
     <html
       lang='en'
       className={cn(
-        'bg-white text-slate-900 antialiased light',
+        'bg-gray-900 text-slate-50 antialiased light',
         fontInter.variable,
         fontSantaCatarina.variable
       )}>
-      <body className='min-h-screen pt-12 bg-slate-50 antialiased font-inter'>
+      <body className='min-h-screen pt-12 bg-neutral-800 antialiased font-inter'>
         <Navbar />
 
         <div className='container max-w-7xl mx-auto h-full pt-12'>
