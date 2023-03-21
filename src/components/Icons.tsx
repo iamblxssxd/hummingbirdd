@@ -1,6 +1,8 @@
-import { LucideProps } from 'lucide-react'
+import { Sun, Moon, type LucideProps } from 'lucide-react'
 
 export const Icons = {
+  sun: Sun,
+  moon: Moon,
   logo: (props: LucideProps) => (
     <svg
       {...props}
