@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['uploadthing.com', 'lh3.googleusercontent.com'],
-  },
   experimental: {
     appDir: true
-  }
+  },
+  async rewrites () {
+    return [
+      {
+        source: '/api/:slug*',
+        destination: 'http://localhost:3000/api/:slug*',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
