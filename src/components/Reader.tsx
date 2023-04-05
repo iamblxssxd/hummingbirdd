@@ -3,6 +3,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { filterWords, fetchDefinition } from '@/lib/utils'
+import WordTooltip from '@/components/WordTooltip'
 
 interface ReaderProps {}
 
@@ -61,8 +62,7 @@ const Reader: FC<ReaderProps> = ({}) => {
     <div>
       {text && (
         <p className='text-4xl'>
-          {/* TODO create tooltip for word */}
-          {/* <WordTooltip word='hey' definition='this is a definition for hey' /> */}
+          <WordTooltip word='hey' definition='this is a definition for hey' />
           {text.split(' ').map((word, index) => {
             const hasDefinition = definitions?.some(
               (definition) => definition.word === word
