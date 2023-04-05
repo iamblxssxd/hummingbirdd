@@ -39,6 +39,7 @@ const Reader: FC<ReaderProps> = ({}) => {
 
       const fetchDefinitions = async () => {
         // make so the word is added if only wordWise !== null
+        // @ts-ignore
         const definitionPromises = words.map((word) => fetchDefinition(word))
         const fetchedDefinitions: Definition[] = await Promise.all(
           definitionPromises
@@ -60,9 +61,20 @@ const Reader: FC<ReaderProps> = ({}) => {
     <div>
       {text && (
         <p className='text-4xl'>
-          {text.split(' ').map((word, index) => (
-            <span key={index}>{word} </span>
-          ))}
+          {/* TODO create tooltip for word */}
+          {/* <WordTooltip word='hey' definition='this is a definition for hey' /> */}
+          {text.split(' ').map((word, index) => {
+            const hasDefinition = definitions?.some(
+              (definition) => definition.word === word
+            )
+            const wordStyle = hasDefinition ? { color: 'red' } : {}
+
+            return (
+              <span key={index} style={wordStyle}>
+                {word}{' '}
+              </span>
+            )
+          })}
         </p>
       )}
       {definitions && (

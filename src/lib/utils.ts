@@ -25,14 +25,14 @@ export async function fetchDefinition(word: String) {
   const requestOptions = {
     method: 'POST',
     headers: {
-      Authorization: ``,
+      Authorization: `Vi2frjcdeyIyEUydliMQ3`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ word: word }),
   }
 
   try {
-    const response = await fetch(``, requestOptions)
+    const response = await fetch(`/api/v1/wordwise`, requestOptions)
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
