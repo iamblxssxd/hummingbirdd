@@ -16,7 +16,9 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className='text-pink-300'>{word}</TooltipTrigger>
+        <TooltipTrigger className='text-green-600 dark:text-pink-300'>
+          {word}
+        </TooltipTrigger>
         <TooltipContent className='text-2xl'>
           <p>{definition}</p>
         </TooltipContent>

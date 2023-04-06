@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { filterWords, fetchDefinition } from '@/lib/utils'
 import WordTooltip from '@/components/WordTooltip'
+import React from 'react'
 
 interface ReaderProps {}
 
@@ -59,25 +60,32 @@ const Reader: FC<ReaderProps> = ({}) => {
   console.log(definitions)
 
   return (
-    <div>
+    <div className='max-w-4xl mx-auto'>
       {text && (
         <p className='text-4xl'>
-          <WordTooltip word='hey' definition='this is a definition for hey' />
           {text.split(' ').map((word, index) => {
-            const hasDefinition = definitions?.some(
+            const definition = definitions?.find(
               (definition) => definition.word === word
             )
-            const wordStyle = hasDefinition ? { color: 'red' } : {}
+            const hasDefinition = !!definition
 
             return (
-              <span key={index} style={wordStyle}>
-                {word}{' '}
-              </span>
+              <React.Fragment key={index}>
+                {hasDefinition ? (
+                  <WordTooltip
+                    key={index}
+                    word={word}
+                    definition={definition?.wordWise.shortDefinition || ''}
+                  />
+                ) : (
+                  <span key={index}>{word} </span>
+                )}{' '}
+              </React.Fragment>
             )
           })}
         </p>
       )}
-      {definitions && (
+      {/* {definitions && (
         <ul>
           {definitions.map((definition, index) => (
             <li key={index}>
@@ -92,7 +100,7 @@ const Reader: FC<ReaderProps> = ({}) => {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   )
 }
