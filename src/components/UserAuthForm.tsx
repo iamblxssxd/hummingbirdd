@@ -7,6 +7,7 @@ import { Icons } from '@/components/Icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import { signIn } from 'next-auth/react'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -20,6 +21,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setTimeout(() => {
       setIsLoading(false)
     }, 3000)
+  }
+
+  const loginWithGoogle = async () => {
+    setIsLoading(true)
+
+    try {
+      await signIn('google')
+    } catch (error) {
+      // TODO toast notification
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
