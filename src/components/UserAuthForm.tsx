@@ -1,18 +1,19 @@
 'use client'
 
 import * as React from 'react'
-
 import { cn } from '@/lib/utils'
 import { Icons } from '@/components/Icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { signIn } from 'next-auth/react'
+import { useToast } from '@/hooks/use-toast'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const { toast } = useToast()
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
@@ -23,17 +24,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }, 3000)
   }
 
-  const loginWithGoogle = async () => {
-    setIsLoading(true)
+  // const loginWithGoogle = async () => {
+  //   setIsLoading(true)
 
-    try {
-      await signIn('google')
-    } catch (error) {
-      // TODO toast notification
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  //   try {
+  //     throw new Error()
+  //     // await signIn('google')
+  //   } catch (error) {
+  //     // TODO toast notification
+  //     toast({
+  //       title: 'There was a problem',
+  //       description: 'There was a problem logging in with google',
+  //       variant: 'destructive',
+  //     })
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
