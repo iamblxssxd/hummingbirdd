@@ -24,23 +24,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }, 3000)
   }
 
-  // const loginWithGoogle = async () => {
-  //   setIsLoading(true)
+  const loginWithGoogle = async () => {
+    setIsLoading(true)
 
-  //   try {
-  //     throw new Error()
-  //     // await signIn('google')
-  //   } catch (error) {
-  //     // TODO toast notification
-  //     toast({
-  //       title: 'There was a problem',
-  //       description: 'There was a problem logging in with google',
-  //       variant: 'destructive',
-  //     })
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
+    try {
+      throw new Error()
+      // await signIn('google')
+    } catch (error) {
+      // TODO toast notification
+      toast({
+        title: 'There was a problem',
+        description: 'There was a problem logging in with google',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
@@ -78,7 +78,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button variant='outline' type='button' disabled={isLoading}>
+      <Button
+        variant='outline'
+        type='button'
+        disabled={isLoading}
+        onClick={loginWithGoogle}>
         {isLoading ? (
           <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
         ) : (

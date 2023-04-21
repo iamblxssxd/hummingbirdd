@@ -4,6 +4,7 @@ import { fontInter, fontSantaCatarina } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import Navbar from '@/components/Navbar'
 import Providers from '@/components/Providers'
+import { Toaster } from '@/components/ui/Toaster'
 
 export const metadata = {
   title: 'Hummingbird',
@@ -30,6 +31,8 @@ export default function RootLayout({
           <div className='container max-w-7xl mx-auto h-full pt-12'>
             {children}
           </div>
+
+          <Toaster />
         </Providers>
       </body>
     </html>
