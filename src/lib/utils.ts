@@ -1,9 +1,6 @@
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { commonWords } from '@/lib/commonWords'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

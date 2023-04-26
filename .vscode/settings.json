@@ -2,5 +2,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "liveServer.settings.port": 3001
+  "liveServer.settings.port": 3001,
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
 }

@@ -2,8 +2,11 @@ import Link from 'next/link'
 import { Icons } from '@/components/Icons'
 import { buttonVariants } from '@/components/ui/Button'
 import ThemeToggle from '@/components/ThemeToggle'
+import { getAuthSession } from '@/lib/auth'
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await getAuthSession()
+
   return (
     <div className='fixed top-0 inset-x-0 h-fit  z-[10] py-2'>
       <div className='container max-w-7xl h-14 mx-auto flex items-center justify-between gap-2'>
@@ -18,9 +21,14 @@ const Navbar = () => {
 
         <div className='hidden md:flex gap-4'>
           <ThemeToggle />
-          <Link href='/sign-in' className={buttonVariants()}>
-            Sign In
-          </Link>
+
+          {session ? (
+            <p>logged in</p>
+          ) : (
+            <Link href='/sign-in' className={buttonVariants()}>
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </div>

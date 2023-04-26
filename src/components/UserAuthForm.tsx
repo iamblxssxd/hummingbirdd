@@ -28,8 +28,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
 
     try {
-      throw new Error()
-      // await signIn('google')
+      // throw new Error()
+      await signIn('google')
     } catch (error) {
       // TODO toast notification
       toast({
