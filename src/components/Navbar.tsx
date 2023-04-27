@@ -22,7 +22,7 @@ const Navbar = async () => {
         <div className='hidden md:flex gap-4'>
           <ThemeToggle />
 
-          {session ? (
+          {session?.user ? (
             <p>logged in</p>
           ) : (
             <Link href='/sign-in' className={buttonVariants()}>
