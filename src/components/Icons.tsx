@@ -1,9 +1,10 @@
-import { Sun, Moon, type LucideProps } from 'lucide-react'
+import { Sun, Moon, User2, type LucideProps } from 'lucide-react'
 type IconProps = React.HTMLAttributes<SVGElement>
 
 export const Icons = {
   sun: Sun,
   moon: Moon,
+  user: User2,
   logo: (props: LucideProps) => (
     <svg
       {...props}
