@@ -3,15 +3,16 @@ import { Icons } from '@/components/Icons'
 import { buttonVariants } from '@/components/ui/Button'
 import ThemeToggle from '@/components/ThemeToggle'
 import { getAuthSession } from '@/lib/auth'
+import UserAccountNav from '@/components/UserAccountNav'
 
 const Navbar = async () => {
   const session = await getAuthSession()
 
   return (
-    <div className='fixed top-0 inset-x-0 h-fit  z-[10] py-2'>
-      <div className='container max-w-7xl h-14 mx-auto flex items-center justify-between gap-2'>
+    <div className='fixed top-0 inset-x-0 h-fit z-[10] py-8'>
+      <div className='container max-w-7xl h-full mx-auto flex items-center justify-between gap-2'>
         <Link href='/' className='flex gap-2 items-center'>
-          <Icons.logo className='h-6 w-6' />
+          <Icons.logo className='h-8 w-9' />
           <p className='hidden text-md font-medium md:block'>Hummingbird</p>
         </Link>
 
@@ -23,7 +24,7 @@ const Navbar = async () => {
           <ThemeToggle />
 
           {session?.user ? (
-            <p>logged in</p>
+            <UserAccountNav user={session.user} />
           ) : (
             <Link href='/sign-in' className={buttonVariants()}>
               Sign In
