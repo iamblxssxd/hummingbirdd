@@ -26,6 +26,7 @@ export default function RootLayout({
       )}>
       <body className='min-h-screen pt-12 antialiased font-inter'>
         <Providers>
+          {/* @ts-expect-error server component */}
           <Navbar />
 
           <div className='container max-w-7xl mx-auto h-full pt-12'>

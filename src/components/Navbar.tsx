@@ -13,11 +13,17 @@ const Navbar = async () => {
       <div className='container max-w-7xl h-full mx-auto flex items-center justify-between gap-2'>
         <Link href='/' className='flex gap-2 items-center'>
           <Icons.logo className='h-8 w-9' />
-          <p className='hidden text-md font-medium md:block'>Hummingbird</p>
+          <p className='hidden text-lg font-semibold md:block'>Hummingbird</p>
         </Link>
 
         <div className='md:hidden'>
-          <ThemeToggle />
+          {session?.user ? (
+            <UserAccountNav user={session.user} />
+          ) : (
+            <Link href='/sign-in' className={buttonVariants()}>
+              Sign In
+            </Link>
+          )}
         </div>
 
         <div className='hidden md:flex gap-4'>
