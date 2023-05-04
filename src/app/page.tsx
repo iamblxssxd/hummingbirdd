@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       {session?.user ? (
-        <div className='flex flex-col justify-start max-w-4xl mx-auto'>
+        <div className='flex flex-col justify-start max-w-4xl mx-auto pt-12'>
           <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-santa'>
             Try it out:
           </h1>

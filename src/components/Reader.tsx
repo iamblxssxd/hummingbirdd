@@ -33,12 +33,6 @@ const Reader: FC<ReaderProps> = ({}) => {
       setWords(words)
       setText(userInput)
 
-      /* city : {
-        definition: String;
-        isDefinition: boolean;
-      }
-      */
-
       const fetchDefinitions = async () => {
         // make so the word is added if only wordWise !== null
         // @ts-ignore
@@ -85,22 +79,6 @@ const Reader: FC<ReaderProps> = ({}) => {
           })}
         </p>
       )}
-      {/* {definitions && (
-        <ul>
-          {definitions.map((definition, index) => (
-            <li key={index}>
-              <p>Word: {definition.word}</p>
-              {definition.wordWise && (
-                <>
-                  <p>Definition: {definition.wordWise.shortDefinition}</p>
-                  <p>Example: {definition.wordWise.exampleSentence}</p>
-                  <p>Hint Level: {definition.wordWise.hintLevel}</p>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )} */}
     </div>
   )
 }
