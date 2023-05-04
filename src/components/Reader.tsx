@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { filterWords, fetchDefinition } from '@/lib/utils'
 import WordTooltip from '@/components/WordTooltip'
 import React from 'react'
+import { Icons } from './Icons'
 
 interface ReaderProps {}
 
@@ -55,6 +56,7 @@ const Reader: FC<ReaderProps> = ({}) => {
 
   return (
     <div className='max-w-4xl mx-auto'>
+      <Icons.mouse className='text-stone-50'/>
       {text && (
         <p className='text-4xl'>
           {text.split(' ').map((word, index) => {
