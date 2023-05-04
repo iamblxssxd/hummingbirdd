@@ -1,4 +1,5 @@
 import { TextareaForm } from '@/components/TextareaForm'
+import TextareaSubmit from '@/components/TextareaSubmit'
 import { getAuthSession } from '@/lib/auth'
 
 export default async function Home() {
@@ -8,12 +9,7 @@ export default async function Home() {
     <>
       {session?.user ? (
         <div className='flex flex-col justify-start max-w-4xl mx-auto pt-12'>
-          <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-santa'>
-            Try it out:
-          </h1>
-          <div className='pt-12'>
-            <TextareaForm />
-          </div>
+          <TextareaSubmit />
         </div>
       ) : (
         <div className='max-w-2xl mx-auto pt-12'>
@@ -27,6 +23,15 @@ export default async function Home() {
             accusantium sequi at veritatis aliquid tenetur quisquam ipsum
             consectetur pariatur porro quas illum eligendi cumque?
           </p>
+
+          <h1
+            className='scroll-m-20 text-4xl font-extrabold lg:text-5xl 
+           pt-20 font-santa'>
+            Try it out:
+          </h1>
+          <div className='pt-10'>
+            <TextareaForm />
+          </div>
         </div>
       )}
     </>

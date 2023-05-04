@@ -4,9 +4,11 @@ import Reader from '@/components/Reader'
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-  return <div>
-    <Reader />
-  </div>
+  return (
+    <div className='font-acaslonpro space'>
+      <Reader />
+    </div>
+  )
 }
 
 export default page

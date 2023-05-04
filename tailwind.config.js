@@ -61,7 +61,8 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         inter: ['var(--font-inter)'],
-        santa: ['var(--font-santa-catarina)']
+        santa: ['var(--font-santa-catarina)'],
+        acaslonpro: ['var(--font-acaslonpro)']
       },
       keyframes: {
         'accordion-down': {

@@ -56,7 +56,7 @@ const Reader: FC<ReaderProps> = ({}) => {
 
   return (
     <div className='max-w-4xl mx-auto'>
-      <Icons.mouse className='text-stone-50'/>
+      <Icons.mouse className='text-stone-50' />
       {text && (
         <p className='text-4xl'>
           {text.split(' ').map((word, index) => {
