@@ -11,11 +11,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-enum VoteType {
-  UP
-  DOWN
-}
-
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -49,6 +44,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   words         Word[]
+  texts         Text[]
 
   username String? @unique
 
@@ -58,13 +54,26 @@ model User {
 }
 
 model Word {
-  id              String   @unique @default(cuid())
-  word            String
+  id              String   @id @default(cuid())
+  word            String   @unique
   definition      String
   shortDefinition String
-  dateAdded       DateTime
-  User            User?    @relation(fields: [userId], references: [id])
-  userId          String?
+  dateAdded       DateTime @default(now())
+  favorite        Boolean
+  texts           Text[]
 
-  @@index([userId])
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  textId String
+}
+
+model Text {
+  id        String   @id @default(cuid())
+  content   Json?
+  dateAdded DateTime @default(now())
+  word      Word?    @relation(fields: [wordId], references: [id])
+  wordId    String?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
