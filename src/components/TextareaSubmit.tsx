@@ -2,23 +2,27 @@
 
 import { useState } from 'react'
 import { Textarea } from '@/components/ui/Textarea'
-import { buttonVariants } from '@/components/ui/Button'
+import { Button, buttonVariants } from '@/components/ui/Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
+import { CreateTextPayload } from '@/lib/validators/text'
 
 interface TextareaSubmitProps {}
 
 const TextareaSubmit = () => {
   const [input, setInput] = useState<string>('')
-  const router = useRouter()
+  // const router = useRouter()
 
-  const {} = useMutation({
+  const { mutate: createText, isLoading } = useMutation({
     mutationFn: async () => {
-      const payload = () => {}
+      const payload: CreateTextPayload = {
+        text: input,
+      }
 
       const { data } = await axios.post('/api/text', payload)
+      return data as string
     },
   })
 
@@ -27,11 +31,21 @@ const TextareaSubmit = () => {
       <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-santa'>
         Your text:
       </h1>
-      <Textarea placeholder='Paste your text here' className='resize-none' />
+      <Textarea
+        placeholder='Paste your text here'
+        className='resize-none'
+        onChange={(e) => setInput(e.target.value)}
+      />
       <div className='flex justify-end'>
-        <Link href='/submit' className={buttonVariants()}>
+        <Button
+          isLoading={isLoading}
+          disabled={input.length === 0}
+          onClick={() => createText()}>
+          Submit Text
+        </Button>
+        {/* <Link href='/reader' className={buttonVariants()}>
           Submit text
-        </Link>
+        </Link> */}
       </div>
     </div>
   )

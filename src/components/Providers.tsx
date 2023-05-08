@@ -2,12 +2,17 @@
 
 import { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const Providers = ({ children }: { children: ReactNode }) => {
+  const queryClient = new QueryClient()
+
   return (
-    <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-      {children}
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+        {children}
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
 
