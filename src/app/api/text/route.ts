@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     })
 
     if (textExists) {
-      return new Response('This text already has been saved', { status: 409 })
+      return new Response('This text has already been saved', { status: 409 })
     }
     // TODO redirect user to the text
 

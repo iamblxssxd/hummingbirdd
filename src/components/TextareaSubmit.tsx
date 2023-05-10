@@ -6,14 +6,15 @@ import { Button, buttonVariants } from '@/components/ui/Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { CreateTextPayload } from '@/lib/validators/text'
+import { toast } from '@/hooks/use-toast'
 
 interface TextareaSubmitProps {}
 
 const TextareaSubmit = () => {
   const [input, setInput] = useState<string>('')
-  // const router = useRouter()
+  const router = useRouter()
 
   const { mutate: createText, isLoading } = useMutation({
     mutationFn: async () => {
@@ -23,6 +24,37 @@ const TextareaSubmit = () => {
 
       const { data } = await axios.post('/api/text', payload)
       return data as string
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 409) {
+          return toast({
+            title: 'Text has been already added.',
+            description: 'Please add a differente text.',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 422) {
+          return toast({
+            title: 'Invalid text length',
+            description: 'Your text must have at least 3 characters',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 401) {
+          // TODO login toast notification
+        }
+      }
+      toast({
+        title: 'An error occured',
+        description: 'Could not save text.',
+        variant: 'destructive',
+      })
+    },
+    onSuccess: (data) => {
+      router.push(`/reader/${data}`)
     },
   })
 
