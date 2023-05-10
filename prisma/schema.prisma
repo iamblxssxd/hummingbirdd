@@ -69,7 +69,7 @@ model Word {
 
 model Text {
   id        String   @id @default(cuid())
-  content   Json?
+  content   String   @db.Text
   dateAdded DateTime @default(now())
   word      Word?    @relation(fields: [wordId], references: [id])
   wordId    String?
