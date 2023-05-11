@@ -32,9 +32,8 @@ export default function RootLayout({
 
           <div className='container max-w-7xl mx-auto h-full pt-12'>
             {children}
+            <Toaster />
           </div>
-
-          <Toaster />
         </Providers>
       </body>
     </html>

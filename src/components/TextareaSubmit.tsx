@@ -4,17 +4,19 @@ import { useState } from 'react'
 import { Textarea } from '@/components/ui/Textarea'
 import { Button, buttonVariants } from '@/components/ui/Button'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { CreateTextPayload } from '@/lib/validators/text'
 import { toast } from '@/hooks/use-toast'
+import { useCustomToast } from '@/hooks/use-custom-toast'
 
 interface TextareaSubmitProps {}
 
 const TextareaSubmit = () => {
   const [input, setInput] = useState<string>('')
   const router = useRouter()
+  const { loginToast } = useCustomToast()
 
   const { mutate: createText, isLoading } = useMutation({
     mutationFn: async () => {
@@ -44,7 +46,7 @@ const TextareaSubmit = () => {
         }
 
         if (err.response?.status === 401) {
-          // TODO login toast notification
+          return loginToast()
         }
       }
       toast({
@@ -75,9 +77,6 @@ const TextareaSubmit = () => {
           onClick={() => createText()}>
           Submit Text
         </Button>
-        {/* <Link href='/reader' className={buttonVariants()}>
-          Submit text
-        </Link> */}
       </div>
     </div>
   )

@@ -16,6 +16,7 @@ export default async function Home() {
           <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-santa'>
             This is a non logged in state
           </h1>
+          <TextareaSubmit />
           <p className='leading-7 [&:not(:first-child)]:mt-6'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
             labore unde mollitia culpa perferendis doloribus? Nihil, vero.
