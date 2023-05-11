@@ -14,19 +14,10 @@ export const useCustomToast = () => {
           <ToastAction
             onClick={() => dismiss()}
             altText='Login'
-            className='h-9 px-4 py-2 border-2 dark:border-white'>
+            className='h-9 px-4 py-2 dark:border-white'>
             Login
           </ToastAction>
         </Link>
-        // <Link
-        //   href='/sign-in'
-        //   onClick={() => dismiss()}
-        //   className={buttonVariants({
-        //     variant: 'outline',
-        //     className: 'bg-destructive dark:border-red-50',
-        //   })}>
-        //   Login
-        // </Link>
       ),
     })
   }
