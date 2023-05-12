@@ -27,7 +27,7 @@ export default async function Home() {
 
           <h1
             className='scroll-m-20 text-4xl font-extrabold lg:text-5xl 
-           pt-20 font-santa'>
+           pt-20 font-irvin'>
             Try it out:
           </h1>
           <div className='pt-10'>

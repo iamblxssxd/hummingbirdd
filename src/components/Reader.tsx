@@ -6,6 +6,9 @@ import { filterWords, fetchDefinition } from '@/lib/utils'
 import WordTooltip from '@/components/WordTooltip'
 import React from 'react'
 import { Icons } from './Icons'
+import { QueryCache, useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { useText } from '@/hooks/useText'
 
 interface ReaderProps {}
 
@@ -21,45 +24,46 @@ interface Definition {
 }
 
 const Reader: FC<ReaderProps> = ({}) => {
-  const [text, setText] = useState<String | null>('')
+  const [userText, setUserText] = useState<String | null>('')
   const [words, setWords] = useState<String[] | undefined>([])
   const [definitions, setDefinitions] = useState<Definition[] | undefined>([])
 
-  const searchParams = useSearchParams()
-  const userInput = searchParams.get('text')
+  const { text } = useText()
 
   useEffect(() => {
-    if (userInput) {
-      const words = filterWords(userInput)
+    if (text) {
+      setUserText(text)
+      const words = filterWords(userText)
       setWords(words)
-      setText(userInput)
 
       const fetchDefinitions = async () => {
         // make so the word is added if only wordWise !== null
-        // @ts-ignore
-        const definitionPromises = words.map((word) => fetchDefinition(word))
-        const fetchedDefinitions: Definition[] = await Promise.all(
-          definitionPromises
-        )
-        setDefinitions(
-          fetchedDefinitions.filter((word) => word.wordWise !== null)
-        )
+        if (words) {
+          const definitionPromises = words.map((word) => fetchDefinition(word))
+          const fetchedDefinitions: Definition[] = await Promise.all(
+            definitionPromises
+          )
+          setDefinitions(
+            fetchedDefinitions.filter((word) => word.wordWise !== null)
+          )
+        }
       }
 
       fetchDefinitions()
     }
-  }, [userInput])
+  }, [text, userText])
 
-  console.log(text)
+  console.log(userText)
   console.log(words)
   console.log(definitions)
 
   return (
     <div className='max-w-4xl mx-auto'>
       <Icons.mouse className='text-stone-50' />
-      {text && (
-        <p className='text-4xl'>
-          {text.split(' ').map((word, index) => {
+      {/* <p>{userText}</p> */}
+      {userText && (
+        <p className='text-4xl font-acaslonpro'>
+          {userText.split(' ').map((word, index) => {
             const definition = definitions?.find(
               (definition) => definition.word === word
             )

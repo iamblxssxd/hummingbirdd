@@ -1,6 +1,11 @@
 import '@/styles/globals.css'
 
-import { fontInter, fontSantaCatarina, fontAcaslonpro } from '@/lib/fonts'
+import {
+  fontInter,
+  fontSantaCatarina,
+  fontAcaslonpro,
+  fontIrvin,
+} from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import Navbar from '@/components/Navbar'
 import Providers from '@/components/Providers'
@@ -23,7 +28,8 @@ export default function RootLayout({
         'antialiased',
         fontInter.variable,
         fontSantaCatarina.variable,
-        fontAcaslonpro.variable
+        fontAcaslonpro.variable,
+        fontIrvin.variable
       )}>
       <body className='min-h-screen pt-12 antialiased font-inter'>
         <Providers>

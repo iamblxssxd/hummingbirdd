@@ -15,3 +15,8 @@ export const fontAcaslonpro = localFont({
   src: '../../public/fonts/acaslonpro-regular-webfont.woff2',
   variable: '--font-acaslonpro',
 })
+
+export const fontIrvin = localFont({
+  src: '../../public/fonts/irvin-heading-webfont.woff2',
+  variable: '--font-irvin',
+})

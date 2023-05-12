@@ -1,11 +1,14 @@
 import { FC } from 'react'
 import Reader from '@/components/Reader'
+import { getAuthSession } from '@/lib/auth'
 
-interface pageProps {}
+interface PageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const page = async () => {
+  // const session = await getAuthSession()
+
   return (
-    <div className='font-acaslonpro space'>
+    <div>
       <Reader />
     </div>
   )
