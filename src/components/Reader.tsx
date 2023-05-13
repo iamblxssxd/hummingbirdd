@@ -1,7 +1,6 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { filterWords, fetchDefinition } from '@/lib/utils'
 import WordTooltip from '@/components/WordTooltip'
 import React from 'react'
@@ -9,6 +8,7 @@ import { Icons } from './Icons'
 import { QueryCache, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useText } from '@/hooks/useText'
+import ReaderActions from './ReaderActions'
 
 interface ReaderProps {}
 
@@ -37,7 +37,6 @@ const Reader: FC<ReaderProps> = ({}) => {
       setWords(words)
 
       const fetchDefinitions = async () => {
-        // make so the word is added if only wordWise !== null
         if (words) {
           const definitionPromises = words.map((word) => fetchDefinition(word))
           const fetchedDefinitions: Definition[] = await Promise.all(
@@ -59,8 +58,6 @@ const Reader: FC<ReaderProps> = ({}) => {
 
   return (
     <div className='max-w-4xl mx-auto'>
-      <Icons.mouse className='text-stone-50' />
-      {/* <p>{userText}</p> */}
       {userText && (
         <p className='text-4xl font-acaslonpro'>
           {userText.split(' ').map((word, index) => {
@@ -85,6 +82,7 @@ const Reader: FC<ReaderProps> = ({}) => {
           })}
         </p>
       )}
+      <ReaderActions readerText={text} />
     </div>
   )
 }
