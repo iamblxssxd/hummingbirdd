@@ -28,7 +28,7 @@ const Navbar = async () => {
           )}
         </div>
 
-        <div className='hidden md:flex gap-4'>
+        <div className='hidden md:flex gap-4 items-center'>
           <ThemeToggle />
 
           {session?.user ? (

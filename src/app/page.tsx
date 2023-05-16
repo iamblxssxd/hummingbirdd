@@ -1,6 +1,7 @@
-import { TextareaForm } from '@/components/TextareaForm'
 import TextareaSubmit from '@/components/TextareaSubmit'
+import WordTooltip from '@/components/WordTooltip'
 import { getAuthSession } from '@/lib/auth'
+import Balancer from 'react-wrap-balancer'
 
 export default async function Home() {
   const session = await getAuthSession()
@@ -12,27 +13,29 @@ export default async function Home() {
           <TextareaSubmit />
         </div>
       ) : (
-        <div className='max-w-2xl mx-auto pt-12'>
-          <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-santa'>
-            This is a non logged in state
+        <div className='container max-w-4xl mx-auto pt-12'>
+          <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-irvin'>
+            <Balancer>Read any article with confidence</Balancer>
           </h1>
-          <TextareaSubmit />
-          <p className='leading-7 [&:not(:first-child)]:mt-6'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            labore unde mollitia culpa perferendis doloribus? Nihil, vero.
-            Numquam rem vitae, cupiditate animi facere, ea architecto,
-            accusantium sequi at veritatis aliquid tenetur quisquam ipsum
-            consectetur pariatur porro quas illum eligendi cumque?
+          <p className=' tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl'>
+            <Balancer>
+              In a world where information{' '}
+              <WordTooltip
+                word='overload'
+                definition='to give too much work to'
+              />{' '}
+              is a constant challenge, Hummingbird with its word definition
+              feature emerges as a game-changer in enhancing the reading
+              experience. By{' '}
+              <WordTooltip
+                word='broadening'
+                definition=' an increase in size'
+              />{' '}
+              vocabulary, improving comprehension, saving time and effort,
+              supporting language learners, and encouraging active reading,
+              Hummingbird revolutionizes the way we consume written content.
+            </Balancer>
           </p>
-
-          <h1
-            className='scroll-m-20 text-4xl font-extrabold lg:text-5xl 
-           pt-20 font-irvin'>
-            Try it out:
-          </h1>
-          <div className='pt-10'>
-            <TextareaForm />
-          </div>
         </div>
       )}
     </>
