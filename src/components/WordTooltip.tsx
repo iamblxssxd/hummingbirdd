@@ -1,4 +1,6 @@
-import { FC } from 'react'
+'use client'
+
+import { FC, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -6,6 +8,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/Tooltip'
 import { Button } from '@/components/ui/Button'
+import { Icons } from '@/components/Icons'
 
 interface WordTooltipProps {
   word: string
@@ -13,14 +16,36 @@ interface WordTooltipProps {
 }
 
 const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
+  const [isWordAdded, setIsWordAdded] = useState<boolean>(false)
+
+  const handleAddWord = () => {
+    setIsWordAdded((prevIsWordAdded) => !prevIsWordAdded)
+  }
+
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger className='text-green-600 dark:text-pink-300'>
-          {word}
+          {word}{' '}
         </TooltipTrigger>
-        <TooltipContent className='text-2xl'>
-          <p>{definition}</p>
+        <TooltipContent className='text-2xl font-inter flex gap-1 items-center justify-center'>
+          <p className='pr-2'>{definition}</p>
+          <Button
+            onClick={handleAddWord}
+            variant='secondary'
+            size='sm'
+            className='p-1'>
+            <Icons.add
+              className={`h-6 w-6 rotate-${isWordAdded ? '0' : '45'} scale-${
+                isWordAdded ? '100' : '0'
+              } transition-all`}
+            />
+            <Icons.remove
+              className={`absolute h-6 w-6 rotate-${
+                isWordAdded ? '-45' : '0'
+              } scale-${isWordAdded ? '0' : '100'} transition-all`}
+            />
+          </Button>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
