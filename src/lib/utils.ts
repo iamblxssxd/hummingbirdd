@@ -6,14 +6,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function filterWords(text: String | null) {
+export function filterWords(text: string): string[] | undefined {
   if (!text) {
-    return
+    return undefined
   }
 
-  const words = text.toLowerCase().split(/\W+/)
-  const filteredWords = words.filter((word) => !commonWords.includes(word))
-  const uniqueWords = Array.from(new Set(filteredWords))
+  // Use a regular expression to split the text into words
+  const words: string[] = text.toLowerCase().match(/\b\w+\b/g) || []
+
+  const filteredWords: string[] = words.filter(
+    (word) => !commonWords.includes(word)
+  )
+
+  const uniqueWords: string[] = Array.from(new Set(filteredWords))
 
   return uniqueWords
 }
@@ -36,8 +41,6 @@ export async function fetchDefinition(word: String) {
     }
 
     const data = await response.json()
-
-    console.log(data)
 
     return data
   } catch (error) {

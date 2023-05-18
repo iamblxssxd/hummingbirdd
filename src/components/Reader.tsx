@@ -1,12 +1,10 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { filterWords, fetchDefinition } from '@/lib/utils'
 import WordTooltip from '@/components/WordTooltip'
 import React from 'react'
-import { Icons } from './Icons'
-import { QueryCache, useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import { useQueries } from '@tanstack/react-query'
 import { useText } from '@/hooks/useText'
 import ReaderActions from './ReaderActions'
 
@@ -24,63 +22,46 @@ interface Definition {
 }
 
 const Reader: FC<ReaderProps> = ({}) => {
-  const [userText, setUserText] = useState<String | null>('')
-  const [words, setWords] = useState<String[] | undefined>([])
-  const [definitions, setDefinitions] = useState<Definition[] | undefined>([])
-
+  console.log('render')
   const { text } = useText()
+  const words = filterWords(text)
 
-  useEffect(() => {
-    if (text) {
-      setUserText(text)
-      const words = filterWords(userText)
-      setWords(words)
-
-      const fetchDefinitions = async () => {
-        if (words) {
-          const definitionPromises = words.map((word) => fetchDefinition(word))
-          const fetchedDefinitions: Definition[] = await Promise.all(
-            definitionPromises
-          )
-          setDefinitions(
-            fetchedDefinitions.filter((word) => word.wordWise !== null)
-          )
-        }
+  const definitions = useQueries({
+    queries: (words ?? []).map((word) => {
+      return {
+        queryKey: ['words', word],
+        queryFn: () => fetchDefinition(word),
       }
+    }),
+  })
 
-      fetchDefinitions()
-    }
-  }, [text, userText])
-
-  console.log(userText)
-  console.log(words)
-  console.log(definitions)
+  console.log('defintions are', definitions)
 
   return (
     <div className='max-w-4xl mx-auto'>
-      {userText && (
-        <p className='text-4xl font-acaslonpro'>
-          {userText.split(' ').map((word, index) => {
-            const definition = definitions?.find(
-              (definition) => definition.word === word
+      {text && (
+        <div className='text-4xl font-acaslonpro'>
+          {text.split(' ').map((word, index) => {
+            const definition = definitions.find(
+              (def) => def?.data?.wordWise?.word === word
             )
+
             const hasDefinition = !!definition
 
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={word}>
                 {hasDefinition ? (
                   <WordTooltip
-                    key={index}
                     word={word}
-                    definition={definition?.wordWise.shortDefinition || ''}
+                    definition={definition?.data?.wordWise.shortDefinition}
                   />
                 ) : (
-                  <span key={index}>{word} </span>
+                  <span>{word} </span>
                 )}{' '}
               </React.Fragment>
             )
           })}
-        </p>
+        </div>
       )}
       <ReaderActions readerText={text} />
     </div>
