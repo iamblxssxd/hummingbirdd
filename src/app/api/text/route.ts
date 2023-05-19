@@ -15,18 +15,24 @@ export async function POST(req: Request) {
     const { text } = TextValidator.parse(body)
 
     // if text exists on the currently logged in user
-    const textExists = await db.user.findFirst({
+    const textExists = await db.text.findFirst({
       where: {
-        id: session.user.id,
-        texts: {
-          some: {
-            content: {
-              equals: text,
-            },
-          },
-        },
+        content: text,
+        userId: session.user.id,
       },
     })
+    // const textExists = await db.user.findFirst({
+    //   where: {
+    //     id: session.user.id,
+    //     texts: {
+    //       some: {
+    //         content: {
+    //           equals: text,
+    //         },
+    //       },
+    //     },
+    //   },
+    // })
 
     if (textExists) {
       return new Response('This text has already been saved', { status: 409 })

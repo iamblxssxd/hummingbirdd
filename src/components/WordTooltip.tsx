@@ -13,14 +13,12 @@ import { Icons } from '@/components/Icons'
 interface WordTooltipProps {
   word: string
   definition: string
+  onAddWord: () => void
 }
 
-const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
+const WordTooltip: FC<WordTooltipProps> = ({ word, definition, onAddWord }) => {
+  // TODO check if the user has a word saved
   const [isWordAdded, setIsWordAdded] = useState<boolean>(false)
-
-  const handleAddWord = () => {
-    setIsWordAdded((prevIsWordAdded) => !prevIsWordAdded)
-  }
 
   return (
     <TooltipProvider delayDuration={200}>
@@ -31,7 +29,7 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
         <TooltipContent className='text-2xl font-inter flex gap-1 items-center justify-center'>
           <p className='pr-2'>{definition}</p>
           <Button
-            onClick={handleAddWord}
+            onClick={onAddWord}
             variant='secondary'
             size='sm'
             className='p-1'>

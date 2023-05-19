@@ -1,11 +1,13 @@
 'use client'
 
-import { FC } from 'react'
-import { filterWords, fetchDefinition } from '@/lib/utils'
-import WordTooltip from '@/components/WordTooltip'
 import React from 'react'
-import { useQueries } from '@tanstack/react-query'
+import { FC } from 'react'
+import axios from 'axios'
+import { useMutation, useQueries } from '@tanstack/react-query'
 import { useText } from '@/hooks/useText'
+import { filterWords, fetchDefinition } from '@/lib/utils'
+import { CreateWordPayload } from '@/lib/validators/word'
+import WordTooltip from '@/components/WordTooltip'
 import ReaderActions from './ReaderActions'
 
 interface ReaderProps {}
@@ -22,7 +24,6 @@ interface Definition {
 }
 
 const Reader: FC<ReaderProps> = ({}) => {
-  console.log('render')
   const { text } = useText()
   const words = filterWords(text)
 
@@ -35,7 +36,22 @@ const Reader: FC<ReaderProps> = ({}) => {
     }),
   })
 
-  console.log('defintions are', definitions)
+  // TODO error handling
+  const { mutate: addWord } = useMutation({
+    mutationFn: async (word: CreateWordPayload) => {
+      const payload = {
+        word: word.word,
+        definition: word.definition,
+        shortDefinition: word.shortDefinition,
+        favorite: word.favorite,
+      }
+
+      const { data } = await axios.post('/api/word', payload)
+      return data as string
+    },
+  })
+
+  // console.log('defintions are', definitions)
 
   return (
     <div className='max-w-4xl mx-auto'>
@@ -54,6 +70,15 @@ const Reader: FC<ReaderProps> = ({}) => {
                   <WordTooltip
                     word={word}
                     definition={definition?.data?.wordWise.shortDefinition}
+                    onAddWord={() =>
+                      addWord({
+                        word: word,
+                        definition: definition.data.wordWise.fullDefinition,
+                        shortDefinition:
+                          definition.data.wordWise.shortDefinition,
+                        favorite: false,
+                      })
+                    }
                   />
                 ) : (
                   <span>{word} </span>
