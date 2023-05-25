@@ -31,7 +31,7 @@ export default function RootLayout({
         fontAcaslonpro.variable,
         fontIrvin.variable
       )}>
-      <body className='min-h-screen pt-12 antialiased font-inter'>
+      <body className='min-h-screen antialiased font-inter'>
         <Providers>
           {/* @ts-expect-error server component */}
           <Navbar />

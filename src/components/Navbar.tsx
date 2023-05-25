@@ -9,7 +9,7 @@ const Navbar = async () => {
   const session = await getAuthSession()
 
   return (
-    <div className='fixed top-0 inset-x-0 h-fit z-[10] py-8'>
+    <div className='sticky top-0 inset-x-0 h-fit z-[10] py-4 bg-background'>
       <div className='container max-w-7xl h-full mx-auto flex items-center justify-between gap-2'>
         <Link href='/' className='flex gap-2 items-center'>
           <Icons.logo className='h-8 w-9' />
