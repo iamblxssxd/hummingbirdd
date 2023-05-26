@@ -2,8 +2,10 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -17,8 +19,9 @@ import {
   TableRow,
 } from '@/components/ui/Table'
 
-// import { Button } from '@/components/ui/Button'
 import { WordsTablePagination } from './WordsTablePagination'
+import { WordsTableToolbar } from './WordsTableToolbar'
+import React from 'react'
 
 interface WordsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -29,15 +32,25 @@ export function WordsTable<TData, TValue>({
   columns,
   data,
 }: WordsTableProps<TData, TValue>) {
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+
   const table = useReactTable({
     data,
     columns,
+    state: {
+      columnFilters,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
   })
 
   return (
     <div className='space-y-4'>
+      <WordsTableToolbar table={table} />
       <div className='rounded-md border'>
         <Table>
           <TableHeader>
