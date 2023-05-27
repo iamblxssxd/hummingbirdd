@@ -6,6 +6,8 @@ import {
   BookmarkPlus,
   BookmarkMinus,
   MoreHorizontal,
+  Sparkles,
+  Star,
   type LucideProps,
 } from 'lucide-react'
 type IconProps = React.HTMLAttributes<SVGElement>
@@ -18,6 +20,8 @@ export const Icons = {
   add: BookmarkPlus,
   remove: BookmarkMinus,
   moreHorizontal: MoreHorizontal,
+  sparkles: Sparkles,
+  star: Star,
   logo: (props: LucideProps) => (
     <svg
       {...props}

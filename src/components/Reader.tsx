@@ -46,7 +46,7 @@ const Reader: FC<ReaderProps> = ({}) => {
         favorite: word.favorite,
       }
 
-      const { data } = await axios.post('/api/word', payload)
+      const { data } = await axios.post('/api/word/add', payload)
       return data as string
     },
   })

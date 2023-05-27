@@ -42,6 +42,7 @@ export function WordsTable<TData, TValue>({
     state: {
       columnFilters,
     },
+    enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
