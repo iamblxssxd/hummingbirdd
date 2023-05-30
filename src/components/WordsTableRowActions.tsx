@@ -47,6 +47,8 @@ export function WordsTableRowActions<TData, Word>({
   const [word, setWord] = useState(row.original.word)
   const [definition, setDefinition] = useState(row.original.definition)
   const [favorite, setFavorite] = useState(row.original.favorite)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+
   const router = useRouter()
   const { toast } = useToast()
 
@@ -64,8 +66,32 @@ export function WordsTableRowActions<TData, Word>({
     },
     onSuccess: () => {
       toast({
-        title: 'Sucess!',
+        title: 'Success!',
         description: 'Favorite was toggled!',
+        variant: 'default',
+      })
+    },
+  })
+
+  const { mutate: updateWord } = useMutation({
+    mutationFn: async (wordId: string) => {
+      const payload = {
+        wordId,
+        word,
+        definition,
+        favorite,
+      }
+
+      await axios.patch('/api/word/update', payload)
+
+      router.refresh()
+      // TODO optimistic updates
+    },
+    onSuccess: () => {
+      setIsDialogOpen(false)
+      toast({
+        title: 'Success!',
+        description: 'Word has been updated!',
         variant: 'default',
       })
     },
@@ -73,7 +99,7 @@ export function WordsTableRowActions<TData, Word>({
 
   return (
     // TODO extract to DropdownWidhDialogItems
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' className='h-8 w-8 p-0'>
@@ -123,7 +149,7 @@ export function WordsTableRowActions<TData, Word>({
             <Input
               id='definition'
               value={definition}
-              onChange={(e) => e.target.value}
+              onChange={(e) => setDefinition(e.target.value)}
               className='col-span-3'
             />
           </div>
@@ -145,7 +171,9 @@ export function WordsTableRowActions<TData, Word>({
         </div>
         <DialogFooter>
           {/* TODO handleSubmit */}
-          <Button type='submit'>Save changes</Button>
+          <Button onClick={() => updateWord(row.original.id)}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
