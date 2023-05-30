@@ -25,6 +25,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './ui/Dialog'
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/AlertDialog'
+
 import { Label } from './ui/Label'
 import { Input } from './ui/Input'
 import { Switch } from './ui/Switch'
@@ -82,13 +95,13 @@ export function WordsTableRowActions<TData, Word>({
         favorite,
       }
 
+      setIsDialogOpen(false)
       await axios.patch('/api/word/update', payload)
 
       router.refresh()
       // TODO optimistic updates
     },
     onSuccess: () => {
-      setIsDialogOpen(false)
       toast({
         title: 'Success!',
         description: 'Word has been updated!',
@@ -97,85 +110,103 @@ export function WordsTableRowActions<TData, Word>({
     },
   })
 
+  console.log(isDialogOpen)
   return (
     // TODO extract to DropdownWidhDialogItems
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant='ghost' className='h-8 w-8 p-0'>
-            <span className='sr-only'>Open menu</span>
-            <Icons.moreHorizontal className='h-4 w-4' />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align='end'>
-          <DialogTrigger className='w-full'>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-          </DialogTrigger>
-          {/* TODO onClick handlers for edit and delete */}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => toggleFavorite(row.original.id)}>
-            Favorite
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>Edit Word</DialogTitle>
-          <DialogDescription>
-            Make changes to the saved word here. Click save when you&apos;re
-            done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='word' className='text-right'>
-              Word
-            </Label>
-            <Input
-              id='word'
-              value={word}
-              onChange={(e) => setWord(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='definition' className='text-right'>
-              Definition
-            </Label>
-            <Input
-              id='definition'
-              value={definition}
-              onChange={(e) => setDefinition(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
-
-          <Separator className='w-auto' />
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='favorite' className='text-right'>
+      <AlertDialog>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant='ghost' className='h-8 w-8 p-0'>
+              <span className='sr-only'>Open menu</span>
+              <Icons.moreHorizontal className='h-4 w-4' />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            <DialogTrigger className='w-full'>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+            </DialogTrigger>
+            {/* TODO onClick handlers for edit and delete */}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => toggleFavorite(row.original.id)}>
               Favorite
-            </Label>
-            <Switch
-              className='col-span-1'
-              checked={favorite}
-              onCheckedChange={() => setFavorite((prev) => !prev)}
-            />
-            <p className='text-sm text-muted-foreground col-span-2 text-right'>
-              Favorite can be toggled later.
-            </p>
+            </DropdownMenuItem>
+            <AlertDialogTrigger className='w-full'>
+              <DropdownMenuItem>
+                Delete
+                <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader>
+            <DialogTitle>Edit Word</DialogTitle>
+            <DialogDescription>
+              Make changes to the saved word here. Click save when you&apos;re
+              done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className='grid gap-4 py-4'>
+            <div className='grid grid-cols-4 items-center gap-4'>
+              <Label htmlFor='word' className='text-right'>
+                Word
+              </Label>
+              <Input
+                id='word'
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
+                className='col-span-3'
+              />
+            </div>
+            <div className='grid grid-cols-4 items-center gap-4'>
+              <Label htmlFor='definition' className='text-right'>
+                Definition
+              </Label>
+              <Input
+                id='definition'
+                value={definition}
+                onChange={(e) => setDefinition(e.target.value)}
+                className='col-span-3'
+              />
+            </div>
+
+            <Separator className='w-auto' />
+            <div className='grid grid-cols-4 items-center gap-4'>
+              <Label htmlFor='favorite' className='text-right'>
+                Favorite
+              </Label>
+              <Switch
+                className='col-span-1'
+                checked={favorite}
+                onCheckedChange={() => setFavorite((prev) => !prev)}
+              />
+              <p className='text-sm text-muted-foreground col-span-2 text-right'>
+                Favorite can be toggled later.
+              </p>
+            </div>
           </div>
-        </div>
-        <DialogFooter>
-          {/* TODO handleSubmit */}
-          <Button onClick={() => updateWord(row.original.id)}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
+          <DialogFooter>
+            {/* TODO handleSubmit */}
+            <Button onClick={() => updateWord(row.original.id)}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              word(s).
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Dialog>
   )
 }
