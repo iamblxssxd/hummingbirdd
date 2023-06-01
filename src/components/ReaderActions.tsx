@@ -12,9 +12,10 @@ import { Button } from '@/components/ui/Button'
 
 interface ReaderActionsProps {
   readerText: string
+  title: string
 }
 
-const ReaderActions: FC<ReaderActionsProps> = ({ readerText }) => {
+const ReaderActions: FC<ReaderActionsProps> = ({ readerText, title }) => {
   const { loginToast } = useCustomToast()
 
   const { mutate: submitText, isLoading } = useMutation({
@@ -64,15 +65,46 @@ const ReaderActions: FC<ReaderActionsProps> = ({ readerText }) => {
   })
 
   return (
-    <div className='pt-20'>
-      <Button
-        isLoading={isLoading}
-        onClick={() => submitText()}
-        variant='outline'
-        className=''>
-        <Icons.bookmark />
-      </Button>
+    <div className='flex items-center justify-between px-2'>
+      <div className='flex-1 text-sm text-muted-foreground'>
+        {title ? (
+          title
+        ) : (
+          <Button className='h-8' variant='ghost'>
+            <span className='sr-only'>Save text</span>
+            Add title
+          </Button>
+        )}
+      </div>
+      <div className='flex items-center space-x-6 lg:space-x-8'>
+        <div className='flex items-center space-x-2'></div>
+        <div className='flex items-center space-x-2'>
+          <Button variant='outline' className='h-8'>
+            <span className='sr-only'>Go to previous word</span>
+            <Icons.leftArrow className='h-4 w-4' />
+            Previous word
+          </Button>
+          <Button variant='outline' className='h-8'>
+            <span className='sr-only'>Go to next page</span>
+            Next Word
+            <Icons.rightArrow className='h-4 w-4' />
+          </Button>
+          <Button variant='outline' className='h-8 w-8 p-0 lg:flex'>
+            <span className='sr-only'>Save text</span>
+            <Icons.bookmark className='h-4 w-4' />
+          </Button>
+        </div>
+      </div>
     </div>
+    // {/* // <div className='pt-20'>
+    // //   <Button
+    // //     isLoading={isLoading}
+    // //     onClick={() => submitText()}
+    // //     variant='outline'
+    // //     className=''>
+    // //     <Icons.bookmark />
+    // //   </Button>
+    // // </div> */}
   )
 }
 

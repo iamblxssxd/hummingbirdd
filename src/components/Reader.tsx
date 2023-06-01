@@ -9,6 +9,7 @@ import { filterWords, fetchDefinition } from '@/lib/utils'
 import { CreateWordPayload } from '@/lib/validators/word'
 import WordTooltip from '@/components/WordTooltip'
 import ReaderActions from './ReaderActions'
+import { Balancer } from 'react-wrap-balancer'
 
 interface ReaderProps {}
 
@@ -24,7 +25,8 @@ interface Definition {
 }
 
 const Reader: FC<ReaderProps> = ({}) => {
-  const { text } = useText()
+  const { text, title } = useText()
+  console.log(title)
   const words = filterWords(text)
 
   const definitions = useQueries({
@@ -54,41 +56,48 @@ const Reader: FC<ReaderProps> = ({}) => {
   // console.log('defintions are', definitions)
 
   return (
-    <div className='max-w-4xl mx-auto'>
+    <div className='max-w-4xl mx-auto space-y-4'>
+      <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-irvin'>
+        {title}
+      </h1>
       {text && (
-        <div className='text-4xl font-acaslonpro'>
-          {text.split(' ').map((word, index) => {
-            const definition = definitions.find(
-              (def) => def?.data?.wordWise?.word === word
-            )
+        <p className=' tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl'>
+          <Balancer>
+            {/* <div className='text-4xl font-acaslonpro'> */}
+            {text.split(' ').map((word, index) => {
+              const definition = definitions.find(
+                (def) => def?.data?.wordWise?.word === word
+              )
 
-            const hasDefinition = !!definition
+              const hasDefinition = !!definition
 
-            return (
-              <React.Fragment key={word}>
-                {hasDefinition ? (
-                  <WordTooltip
-                    word={word}
-                    definition={definition?.data?.wordWise.shortDefinition}
-                    onAddWord={() =>
-                      addWord({
-                        word: word,
-                        definition: definition.data.wordWise.fullDefinition,
-                        shortDefinition:
-                          definition.data.wordWise.shortDefinition,
-                        favorite: false,
-                      })
-                    }
-                  />
-                ) : (
-                  <span>{word} </span>
-                )}{' '}
-              </React.Fragment>
-            )
-          })}
-        </div>
+              return (
+                <React.Fragment key={word}>
+                  {hasDefinition ? (
+                    <WordTooltip
+                      word={word}
+                      definition={definition?.data?.wordWise.shortDefinition}
+                      onAddWord={() =>
+                        addWord({
+                          word: word,
+                          definition: definition.data.wordWise.fullDefinition,
+                          shortDefinition:
+                            definition.data.wordWise.shortDefinition,
+                          favorite: false,
+                        })
+                      }
+                    />
+                  ) : (
+                    <span>{word} </span>
+                  )}{' '}
+                </React.Fragment>
+              )
+            })}
+          </Balancer>
+        </p>
+        // </div>
       )}
-      <ReaderActions readerText={text} />
+      <ReaderActions readerText={text} title={title} />
     </div>
   )
 }

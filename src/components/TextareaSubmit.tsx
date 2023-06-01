@@ -11,11 +11,13 @@ import { CreateTextPayload } from '@/lib/validators/text'
 import { toast } from '@/hooks/use-toast'
 import { useCustomToast } from '@/hooks/use-custom-toast'
 import { useText } from '@/hooks/useText'
+import { Input } from './ui/Input'
 
 interface TextareaSubmitProps {}
 
 const TextareaSubmit = () => {
-  const [input, setInput] = useState<string>('')
+  const [title, setTitle] = useState<string>('')
+  const [text, setText] = useState<string>('')
   const { updateText } = useText()
 
   // in larger projects:
@@ -25,7 +27,7 @@ const TextareaSubmit = () => {
   const { loginToast } = useCustomToast()
 
   const submitText = () => {
-    updateText(input)
+    updateText(text, title)
     router.push('/reader')
   }
 
@@ -76,15 +78,22 @@ const TextareaSubmit = () => {
       <h1 className='scroll-m-20 text-4xl font-extrabold lg:text-5xl font-irvin'>
         Your text:
       </h1>
+      <Input
+        placeholder='Title'
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <Textarea
         placeholder='Paste your text here'
         className='resize-none'
-        onChange={(e) => setInput(e.target.value)}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
       />
-      <div className='flex justify-end'>
+      <div className='flex items-center justify-end space-x-2'>
         <Button
           // isLoading={}
-          disabled={input.length === 0}
+          className='h-8'
+          disabled={text.length === 0}
           onClick={() => submitText()}>
           Submit Text
         </Button>

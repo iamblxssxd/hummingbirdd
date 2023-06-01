@@ -26,20 +26,21 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition, onAddWord }) => {
         <TooltipTrigger className='text-green-600 dark:text-pink-300'>
           {word}{' '}
         </TooltipTrigger>
-        <TooltipContent className='text-2xl font-inter flex gap-1 items-center justify-center'>
-          <p className='pr-2'>{definition}</p>
+        <TooltipContent className='flex gap-1 items-center justify-center'>
+          <p className='leading-7 pr-2 font-inter text-lg'>{definition}</p>
+          {/* <p className='pr-2 '>{definition}</p> */}
           <Button
             onClick={onAddWord}
             variant='secondary'
             size='sm'
-            className='p-1'>
+            className='h-8 w-8'>
             <Icons.add
-              className={`h-6 w-6 rotate-${isWordAdded ? '0' : '45'} scale-${
+              className={`h-4 w-4 rotate-${isWordAdded ? '0' : '45'} scale-${
                 isWordAdded ? '100' : '0'
               } transition-all`}
             />
             <Icons.remove
-              className={`absolute h-6 w-6 rotate-${
+              className={`absolute h-4 w-4 rotate-${
                 isWordAdded ? '-45' : '0'
               } scale-${isWordAdded ? '0' : '100'} transition-all`}
             />

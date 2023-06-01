@@ -8,6 +8,9 @@ import {
   MoreHorizontal,
   Sparkles,
   Star,
+  ClipboardPaste,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   type LucideProps,
 } from 'lucide-react'
 type IconProps = React.HTMLAttributes<SVGElement>
@@ -22,6 +25,9 @@ export const Icons = {
   moreHorizontal: MoreHorizontal,
   sparkles: Sparkles,
   star: Star,
+  clipboardPaste: ClipboardPaste,
+  leftArrow: ChevronLeftIcon,
+  rightArrow: ChevronRightIcon,
   logo: (props: LucideProps) => (
     <svg
       {...props}
