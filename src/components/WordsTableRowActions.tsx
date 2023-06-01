@@ -110,6 +110,27 @@ export function WordsTableRowActions<TData, Word>({
     },
   })
 
+  const { mutate: deleteWord } = useMutation({
+    mutationFn: async (wordId: string) => {
+      const payload = {
+        wordId,
+      }
+
+      setIsDialogOpen(false)
+      await axios.post('/api/word/delete', payload)
+
+      router.refresh()
+      // TODO optimistic updates
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Success!',
+        description: 'Word has been deleted!',
+        variant: 'default',
+      })
+    },
+  })
+
   console.log(isDialogOpen)
   return (
     // TODO extract to DropdownWidhDialogItems
@@ -203,7 +224,7 @@ export function WordsTableRowActions<TData, Word>({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={() => deleteWord(row.original.id)}>Continue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
