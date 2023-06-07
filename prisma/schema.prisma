@@ -44,13 +44,14 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   words         Word[]
-  // texts         Text[]
+  texts         Text[]
 
   username String? @unique
 
   image    String?
   accounts Account[]
   sessions Session[]
+  // Text     Text[]
 }
 
 model Word {
@@ -60,20 +61,27 @@ model Word {
   shortDefinition String
   dateAdded       DateTime @default(now())
   favorite        Boolean
-  // texts           Text[]
-
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
-  // textId String
+  user            User?    @relation(fields: [userId], references: [id])
+  userId          String?
+  texts           Text[] // Add a texts field to Word
 }
 
-// model Text {
-//   id        String   @id @default(cuid())
-//   content   String   @db.Text
-//   dateAdded DateTime @default(now())
-//   word      Word?    @relation(fields: [wordId], references: [id])
-//   wordId    String?
+model Text {
+  id              String   @id @default(cuid())
+  title           String
+  content         String   @db.Text
+  dateAdded       DateTime @default(now())
+  user            User?    @relation(fields: [userId], references: [id])
+  userId          String?
+  wordDefinitions Word[] // Change from wordTexts to wordDefinitions
+}
 
-//   User   User?   @relation(fields: [userId], references: [id])
-//   userId String?
+// model WordText {
+//   id     String @id @default(cuid())
+//   wordId String
+//   textId String
+//   word   Word   @relation(fields: [wordId], references: [id])
+//   text   Text   @relation(fields: [textId], references: [id])
+
+//   @@unique([wordId, textId])
 // }

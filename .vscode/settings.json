@@ -9,5 +9,6 @@
   "prettier.ignorePath": "",
   "prettier.jsxSingleQuote": true,
   "prettier.singleAttributePerLine": true,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "liveServer.settings.port": 3002
 }

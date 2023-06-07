@@ -1,7 +1,19 @@
 import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { TextValidator } from '@/lib/validators/text'
 import { z } from 'zod'
+
+const TextValidator = z.object({
+  text: z.string(),
+  title: z.string(),
+  wordDefinitions: z.array(
+    z.object({
+      word: z.string(),
+      definition: z.string(),
+      shortDefinition: z.string(),
+      favorite: z.boolean(),
+    })
+  ),
+})
 
 export async function POST(req: Request) {
   try {
@@ -12,37 +24,59 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json()
-    const { text } = TextValidator.parse(body)
+    const { text, title, wordDefinitions } = TextValidator.parse(body)
 
-    // if text exists on the currently logged in user
     const textExists = await db.text.findFirst({
       where: {
         content: text,
         userId: session.user.id,
       },
     })
-    // const textExists = await db.user.findFirst({
-    //   where: {
-    //     id: session.user.id,
-    //     texts: {
-    //       some: {
-    //         content: {
-    //           equals: text,
-    //         },
-    //       },
-    //     },
-    //   },
-    // })
 
+    // TODO redirect user to the text
     if (textExists) {
       return new Response('This text has already been saved', { status: 409 })
     }
-    // TODO redirect user to the text
 
+    // Check for existing words and create or associate them
+    const existingWords = await Promise.all(
+      wordDefinitions.map(async (wordDef) => {
+        let existingWord = await db.word.findFirst({
+          where: {
+            word: wordDef.word,
+            userId: session.user.id,
+          },
+        })
+
+        if (!existingWord) {
+          // Create a new Word if it doesn't exist
+          existingWord = await db.word.create({
+            data: {
+              word: wordDef.word,
+              definition: wordDef.definition,
+              shortDefinition: wordDef.shortDefinition,
+              favorite: wordDef.favorite,
+              user: { connect: { id: session.user.id } },
+            },
+          })
+        }
+
+        return existingWord
+      })
+    )
+
+    // Create new Text with associated Word definitions
     const newText = await db.text.create({
       data: {
+        title: title,
         content: text,
-        userId: session.user.id,
+        user: { connect: { id: session.user.id } },
+        wordDefinitions: {
+          connect: existingWords.map((word) => ({ id: word.id })),
+        },
+      },
+      include: {
+        wordDefinitions: true,
       },
     })
 

@@ -3,7 +3,7 @@
 import React from 'react'
 import { FC } from 'react'
 import axios from 'axios'
-import { useMutation, useQueries } from '@tanstack/react-query'
+import { UseQueryOptions, useMutation, useQueries } from '@tanstack/react-query'
 import { useText } from '@/hooks/useText'
 import { filterWords, fetchDefinition } from '@/lib/utils'
 import { CreateWordPayload } from '@/lib/validators/word'
@@ -34,18 +34,38 @@ const Reader: FC<ReaderProps> = ({}) => {
       return {
         queryKey: ['words', word],
         queryFn: () => fetchDefinition(word),
+        staleTime: Infinity,
       }
     }),
   })
 
+  // TODO utility function
+  const mappedDefinitions = definitions.map((def) => ({
+    data: {
+      wordWise: {
+        word: def.data?.wordWise?.word || '',
+        fullDefinition: def.data?.wordWise?.fullDefinition || '',
+        shortDefinition: def.data?.wordWise?.shortDefinition || '',
+        favorite: false, // might need to adjust this based on the logic
+      },
+    },
+  }))
+
+  console.log('definitions are', definitions)
+
   // TODO error handling
   const { mutate: addWord } = useMutation({
-    mutationFn: async (word: CreateWordPayload) => {
-      const payload = {
-        word: word.word,
-        definition: word.definition,
-        shortDefinition: word.shortDefinition,
-        favorite: word.favorite,
+    mutationFn: async ({
+      word,
+      definition,
+      shortDefinition,
+      favorite,
+    }: CreateWordPayload) => {
+      const payload: CreateWordPayload = {
+        word: word,
+        definition: definition,
+        shortDefinition: shortDefinition,
+        favorite: favorite,
       }
 
       const { data } = await axios.post('/api/word/add', payload)
@@ -53,7 +73,8 @@ const Reader: FC<ReaderProps> = ({}) => {
     },
   })
 
-  // console.log('defintions are', definitions)
+  console.log('defintions are', definitions)
+  console.log('mapped definitions are', mappedDefinitions)
 
   return (
     <div className='max-w-4xl mx-auto space-y-4'>
@@ -61,13 +82,17 @@ const Reader: FC<ReaderProps> = ({}) => {
         {title}
       </h1>
       {text && (
-        <p className=' tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl'>
+        <div className=' tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl'>
           <Balancer>
             {/* <div className='text-4xl font-acaslonpro'> */}
             {text.split(' ').map((word, index) => {
-              const definition = definitions.find(
+              const definition = mappedDefinitions.find(
                 (def) => def?.data?.wordWise?.word === word
               )
+
+              const { wordWise } = definition?.data || {}
+              const fullDefinition = wordWise?.fullDefinition ?? ''
+              const shortDefinition = wordWise?.shortDefinition ?? ''
 
               const hasDefinition = !!definition
 
@@ -76,13 +101,12 @@ const Reader: FC<ReaderProps> = ({}) => {
                   {hasDefinition ? (
                     <WordTooltip
                       word={word}
-                      definition={definition?.data?.wordWise.shortDefinition}
+                      definition={shortDefinition}
                       onAddWord={() =>
                         addWord({
                           word: word,
-                          definition: definition.data.wordWise.fullDefinition,
-                          shortDefinition:
-                            definition.data.wordWise.shortDefinition,
+                          definition: fullDefinition,
+                          shortDefinition: shortDefinition,
                           favorite: false,
                         })
                       }
@@ -94,10 +118,13 @@ const Reader: FC<ReaderProps> = ({}) => {
               )
             })}
           </Balancer>
-        </p>
-        // </div>
+        </div>
       )}
-      <ReaderActions readerText={text} title={title} />
+      <ReaderActions
+        readerText={text}
+        title={title}
+        definitions={mappedDefinitions}
+      />
     </div>
   )
 }

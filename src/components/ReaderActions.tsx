@@ -13,20 +13,48 @@ import { Button } from '@/components/ui/Button'
 interface ReaderActionsProps {
   readerText: string
   title: string
+  definitions: {
+    data: {
+      wordWise: {
+        word: string
+        fullDefinition: string
+        shortDefinition: string
+        favorite: boolean
+      }
+    }
+  }[]
 }
 
-const ReaderActions: FC<ReaderActionsProps> = ({ readerText, title }) => {
+const ReaderActions: FC<ReaderActionsProps> = ({
+  readerText,
+  title,
+  definitions,
+}) => {
   const { loginToast } = useCustomToast()
 
   const { mutate: submitText, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: CreateTextPayload = {
+        title: title,
         text: readerText,
+        wordDefinitions: definitions
+          .filter((definition) => definition.data?.wordWise !== null)
+          .map((definition) => {
+            const wordWiseData = definition.data.wordWise
+            return {
+              word: wordWiseData.word,
+              definition: wordWiseData.fullDefinition,
+              shortDefinition: wordWiseData.shortDefinition,
+              favorite: false,
+            }
+          }),
       }
 
+      console.log(definitions)
       const { data } = await axios.post('/api/text', payload)
       return data as string
     },
+
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
@@ -71,7 +99,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({ readerText, title }) => {
           title
         ) : (
           <Button className='h-8' variant='ghost'>
-            <span className='sr-only'>Save text</span>
+            <span className='sr-only'>Add title</span>
             Add title
           </Button>
         )}
@@ -85,26 +113,25 @@ const ReaderActions: FC<ReaderActionsProps> = ({ readerText, title }) => {
             Previous word
           </Button>
           <Button variant='outline' className='h-8'>
-            <span className='sr-only'>Go to next page</span>
-            Next Word
+            <span className='sr-only'>Go to next word</span>
+            Next word
             <Icons.rightArrow className='h-4 w-4' />
           </Button>
-          <Button variant='outline' className='h-8 w-8 p-0 lg:flex'>
+          <Button
+            variant='outline'
+            className='h-8 w-8 p-0 lg:flex'
+            disabled={isLoading}
+            onClick={() => submitText()}>
             <span className='sr-only'>Save text</span>
-            <Icons.bookmark className='h-4 w-4' />
+            {isLoading ? (
+              <Icons.spinner className='h-4 w-4 animate-spin' />
+            ) : (
+              <Icons.bookmark className='h-4 w-4' />
+            )}
           </Button>
         </div>
       </div>
     </div>
-    // {/* // <div className='pt-20'>
-    // //   <Button
-    // //     isLoading={isLoading}
-    // //     onClick={() => submitText()}
-    // //     variant='outline'
-    // //     className=''>
-    // //     <Icons.bookmark />
-    // //   </Button>
-    // // </div> */}
   )
 }
 

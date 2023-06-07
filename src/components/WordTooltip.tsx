@@ -12,7 +12,7 @@ import { Icons } from '@/components/Icons'
 
 interface WordTooltipProps {
   word: string
-  definition: string
+  definition: string | undefined
   onAddWord: () => void
 }
 
@@ -28,7 +28,6 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition, onAddWord }) => {
         </TooltipTrigger>
         <TooltipContent className='flex gap-1 items-center justify-center'>
           <p className='leading-7 pr-2 font-inter text-lg'>{definition}</p>
-          {/* <p className='pr-2 '>{definition}</p> */}
           <Button
             onClick={onAddWord}
             variant='secondary'
