@@ -1,3 +1,4 @@
+import FeaturedTexts from '@/components/FeaturedTexts'
 import TextareaSubmit from '@/components/TextareaSubmit'
 import WordTooltip from '@/components/WordTooltip'
 import { getAuthSession } from '@/lib/auth'
@@ -9,7 +10,10 @@ export default async function Home() {
   return (
     <>
       {session?.user ? (
-        <div className='flex flex-col justify-start max-w-4xl mx-auto pt-12'>
+        <div className='flex flex-col justify-start max-w-5xl mx-auto pt-12'>
+          <div className='flex flex-wrap gap-8 mb-8'>
+            <FeaturedTexts />
+          </div>
           <TextareaSubmit />
         </div>
       ) : (

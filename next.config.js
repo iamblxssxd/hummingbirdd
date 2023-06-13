@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['uploadthing.com', 'lh3.googleusercontent.com'],
+    domains: [
+      'uploadthing.com',
+      'lh3.googleusercontent.com',
+      'media.newyorker.com',
+    ],
   },
   experimental: {
-    appDir: true
+    appDir: true,
   },
-  async rewrites () {
+  async rewrites() {
     return [
       {
         source: '/api/v1/:slug*',

@@ -37,9 +37,7 @@ export default function RootLayout({
           {/* @ts-expect-error server component */}
           <Navbar />
 
-          <div className='container max-w-7xl mx-auto h-full pt-12'>
-            {children}
-          </div>
+          <div className='container max-w-7xl mx-auto h-full'>{children}</div>
           <Toaster />
         </Providers>
       </body>

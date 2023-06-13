@@ -8,6 +8,7 @@ import {
   MoreHorizontal,
   Sparkles,
   Star,
+  Plus,
   ClipboardPaste,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -28,6 +29,7 @@ export const Icons = {
   clipboardPaste: ClipboardPaste,
   leftArrow: ChevronLeftIcon,
   rightArrow: ChevronRightIcon,
+  addText: Plus,
   logo: (props: LucideProps) => (
     <svg
       {...props}
