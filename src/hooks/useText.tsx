@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 interface Text {
-  title: string
+  title?: string
   text: string
   updateText: (text: string, title: string) => void
 }

@@ -129,6 +129,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({
               <Icons.bookmark className='h-4 w-4' />
             )}
           </Button>
+          {/* TODO "mark as read" button */}
         </div>
       </div>
     </div>
