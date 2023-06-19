@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/Form'
 import { Textarea } from './ui/Textarea'
 import { useText } from '@/hooks/useText'
-import { Input } from './ui/Input'
+import { Input } from '@/components/ui/Input'
 
 // TODO create an optional author/source field
 const textFormSchema = z.object({

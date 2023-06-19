@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/Button'
 // TODO accept empty definitions array (throws an error when you try to save a text without any definitions)
 interface ReaderActionsProps {
   readerText: string
-  title: string
+  title: string | undefined
   definitions: {
     data: {
       wordWise: {
@@ -95,6 +95,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({
   return (
     <div className='flex items-center justify-between px-2'>
       <div className='flex-1 text-sm text-muted-foreground'>
+        {/* TODO users should be able to edit the title */}
         {title ? (
           title
         ) : (
