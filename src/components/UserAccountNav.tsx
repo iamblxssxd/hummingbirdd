@@ -42,6 +42,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
 
         <DropdownMenuSeparator />
 
+        {/* TODO add icons (words, library, settings) */}
         <DropdownMenuItem asChild>
           <Link href='/dashboard'>Saved Words</Link>
         </DropdownMenuItem>

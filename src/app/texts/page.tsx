@@ -21,7 +21,7 @@ export default async function page() {
 
   // TODO add pagination to the feed
   return (
-    <div>
+    <div className='pt-12 max-w-3xl mx-auto'>
       <UserSavedTexts texts={texts} />
     </div>
   )

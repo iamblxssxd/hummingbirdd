@@ -49,6 +49,9 @@ export function WordsTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
   })
 
+  // TODO add filer by favorite (might be a good idea to add a verb/noun/adjective tags and filter by them too)
+  // TODO optimistic updates for delete/favorite
+  // TODO fix updated state after delete/favorite (currently it's not updated in the edit form until the page is refreshed)
   return (
     <div className='space-y-4'>
       <WordsTableToolbar table={table} />
@@ -73,6 +76,7 @@ export function WordsTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
+            {/* TODO refactor ternary to make this part more readable */}
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

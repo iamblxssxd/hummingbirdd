@@ -12,6 +12,7 @@ import {
   ClipboardPaste,
   ChevronLeftIcon,
   ChevronRightIcon,
+  CheckCheck,
   type LucideProps,
 } from 'lucide-react'
 type IconProps = React.HTMLAttributes<SVGElement>
@@ -30,6 +31,7 @@ export const Icons = {
   leftArrow: ChevronLeftIcon,
   rightArrow: ChevronRightIcon,
   addText: Plus,
+  checkIcon: CheckCheck,
   logo: (props: LucideProps) => (
     <svg
       {...props}
