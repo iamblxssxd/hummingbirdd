@@ -39,6 +39,7 @@ export async function fetchDefinition(
   const requestOptions = {
     method: 'POST',
     headers: {
+      // TODO - move to env
       Authorization: `Vi2frjcdeyIyEUydliMQ3`,
       'Content-Type': 'application/json',
     },

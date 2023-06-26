@@ -15,20 +15,34 @@ import { CreateTextPayload } from '@/lib/validators/text'
 import WordTooltip from '@/components/WordTooltip'
 import ReaderActions from '@/components/ReaderActions'
 import { Balancer } from 'react-wrap-balancer'
+import { Text } from '@prisma/client'
 
-interface ReaderProps {}
+interface ReaderProps {
+  userText?: Text
+}
 
-const Reader: FC<ReaderProps> = ({}) => {
+// TODO refactor this component (split it into smaller components/hooks)
+const Reader: FC<ReaderProps> = ({ userText }) => {
   const { text, title } = useText()
-  const words = filterWords(text)
+  // const [currentText, setCurrentText] = useState(userText?.content || text)
+  // const [currentTitle, setCurrentTitle] = useState(userText?.title || title)
 
   const router = useRouter()
   const { loginToast } = useCustomToast()
 
+  const currentText = userText?.content || text
+  const currentTitle = userText?.title || title
+
+  // TODO reduce the number of API calls by filtering out the words that are not in the db
+  let words
+  if (currentText !== undefined) {
+    words = filterWords(currentText)
+  }
+
   const definitions = useQueries({
     queries: (words ?? []).map((word) => {
       return {
-        queryKey: ['words', word],
+        queryKey: ['definitions', word],
         queryFn: () => fetchDefinition(word),
         staleTime: Infinity,
       }
@@ -76,8 +90,8 @@ const Reader: FC<ReaderProps> = ({}) => {
   const { mutate: createText, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: CreateTextPayload = {
-        text: text,
-        title: title,
+        text: currentText,
+        title: currentTitle,
         wordDefinitions: mappedDefinitions,
       }
 
@@ -112,6 +126,7 @@ const Reader: FC<ReaderProps> = ({}) => {
         variant: 'destructive',
       })
     },
+    // TODO fix redirect (should be /read/textId)
     onSuccess: (data) => {
       router.push(`/reader`)
     },
@@ -121,15 +136,15 @@ const Reader: FC<ReaderProps> = ({}) => {
   console.log('mapped definitions are', mappedDefinitions)
 
   return (
-    <div className='max-w-4xl mx-auto space-y-4'>
-      <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-irvin'>
-        {title}
+    <div className='max-w-4xl mx-auto space-y-4 pt-16'>
+      <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-irvin mb-4'>
+        {currentTitle}
       </h1>
-      {text && (
+      {currentText && (
         <div className=' tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl'>
           <Balancer>
             {/* <div className='text-4xl font-acaslonpro'> */}
-            {text.split(' ').map((word, index) => {
+            {currentText.split(' ').map((word, index) => {
               const definition = mappedDefinitions[word]
 
               if (definition) {
@@ -163,8 +178,8 @@ const Reader: FC<ReaderProps> = ({}) => {
         </div>
       )}
       <ReaderActions
-        readerText={text}
-        title={title}
+        readerText={currentText}
+        title={currentTitle}
         definitions={mappedDefinitions}
       />
     </div>

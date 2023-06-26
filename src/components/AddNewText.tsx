@@ -30,6 +30,7 @@ import { useText } from '@/hooks/useText'
 import { Input } from '@/components/ui/Input'
 
 // TODO create an optional author/source field
+// TODO fix onClick on the text field (it shouldn't scroll to the top of the text)
 const textFormSchema = z.object({
   title: z
     .string()

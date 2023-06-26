@@ -26,7 +26,7 @@ export function TextPreview({ text }: TextPreviewProps) {
     <div className='h-24 p-4 flex items-center justify-between border-b-[1px] max-w-3xl'>
       <div className='flex items-center space-x-4'>
         <Link
-          href='#'
+          href={`/read/${text.id}`}
           aria-label='Open Text'
           className='block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none focus:outline-focus'>
           <div className='grid flex-shrink-0 w-12 h-12'>
@@ -38,14 +38,17 @@ export function TextPreview({ text }: TextPreviewProps) {
 
         {/* TODO truncate text with dynamic width (flex hack?) */}
         <div className='w-[200px] md:w-[470px]'>
-          <Link aria-hidden href='#' className='hover:underline'>
+          <Link
+            aria-hidden
+            href={`/read/${text.id}`}
+            className='hover:underline'>
             <span className='flex-initial overflow-hidden truncate font-irvin'>
               {text.title || 'Untitled'}
             </span>
           </Link>
           <Link
             aria-hidden
-            href='#'
+            href={`/read/${text.id}`}
             className='truncate hover:underline flex-1'>
             <p className='truncate '>{text.content}</p>
           </Link>

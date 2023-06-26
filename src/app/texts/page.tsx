@@ -10,7 +10,7 @@ export default async function page() {
 
   if (!session?.user) return notFound()
 
-  const texts = await await db.text.findMany({
+  const texts = await db.text.findMany({
     where: {
       userId: session.user.id,
     },
@@ -22,6 +22,7 @@ export default async function page() {
   // TODO add pagination to the feed
   return (
     <div className='pt-12 max-w-3xl mx-auto'>
+      {/* TODO if no texts show a message */}
       <UserSavedTexts texts={texts} />
     </div>
   )
