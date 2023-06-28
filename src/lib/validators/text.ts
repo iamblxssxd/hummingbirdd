@@ -1,5 +1,5 @@
 // TODO add validators
-import { z } from 'zod'
+import { z } from "zod";
 
 export const TextValidator = z.object({
   text: z.string().min(10).max(1000),
@@ -12,6 +12,6 @@ export const TextValidator = z.object({
       favorite: z.boolean(),
     })
     .array(),
-})
+});
 
-export type CreateTextPayload = z.infer<typeof TextValidator>
+export type CreateTextPayload = z.infer<typeof TextValidator>;

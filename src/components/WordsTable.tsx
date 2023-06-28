@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   ColumnDef,
@@ -8,7 +8,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -17,15 +17,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table'
+} from "@/components/ui/Table";
 
-import { WordsTablePagination } from './WordsTablePagination'
-import { WordsTableToolbar } from './WordsTableToolbar'
-import React from 'react'
+import { WordsTablePagination } from "./WordsTablePagination";
+import { WordsTableToolbar } from "./WordsTableToolbar";
+import React from "react";
 
 interface WordsTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function WordsTable<TData, TValue>({
@@ -33,8 +33,8 @@ export function WordsTable<TData, TValue>({
   data,
 }: WordsTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+    [],
+  );
 
   const table = useReactTable({
     data,
@@ -47,15 +47,15 @@ export function WordsTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-  })
+  });
 
   // TODO add filer by favorite (might be a good idea to add a verb/noun/adjective tags and filter by them too)
   // TODO optimistic updates for delete/favorite
   // TODO fix updated state after delete/favorite (currently it's not updated in the edit form until the page is refreshed)
   return (
-    <div className='space-y-4'>
+    <div className="space-y-4">
       <WordsTableToolbar table={table} />
-      <div className='rounded-md border'>
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -67,10 +67,10 @@ export function WordsTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -81,12 +81,13 @@ export function WordsTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -96,7 +97,8 @@ export function WordsTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'>
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -106,5 +108,5 @@ export function WordsTable<TData, TValue>({
       </div>
       <WordsTablePagination table={table} />
     </div>
-  )
+  );
 }

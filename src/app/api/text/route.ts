@@ -1,6 +1,6 @@
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { z } from 'zod'
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { z } from "zod";
 
 const TextValidator = z.object({
   text: z.string(),
@@ -11,31 +11,31 @@ const TextValidator = z.object({
       definition: z.string(),
       shortDefinition: z.string(),
       favorite: z.boolean(),
-    })
+    }),
   ),
-})
+});
 
 export async function POST(req: Request) {
   try {
-    const session = await getAuthSession()
+    const session = await getAuthSession();
 
     if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 })
+      return new Response("Unauthorized", { status: 401 });
     }
 
-    const body = await req.json()
-    const { text, title, wordDefinitions } = TextValidator.parse(body)
+    const body = await req.json();
+    const { text, title, wordDefinitions } = TextValidator.parse(body);
 
     const textExists = await db.text.findFirst({
       where: {
         content: text,
         userId: session.user.id,
       },
-    })
+    });
 
     // TODO redirect user to the text
     if (textExists) {
-      return new Response('This text has already been saved', { status: 409 })
+      return new Response("This text has already been saved", { status: 409 });
     }
 
     // Check for existing words and create or associate them
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
             word: wordDef.word,
             userId: session.user.id,
           },
-        })
+        });
 
         if (!existingWord) {
           // Create a new Word if it doesn't exist
@@ -58,12 +58,12 @@ export async function POST(req: Request) {
               favorite: wordDef.favorite,
               user: { connect: { id: session.user.id } },
             },
-          })
+          });
         }
 
-        return existingWord
-      })
-    )
+        return existingWord;
+      }),
+    );
 
     // Create new Text with associated Word definitions
     const newText = await db.text.create({
@@ -78,16 +78,16 @@ export async function POST(req: Request) {
       include: {
         wordDefinitions: true,
       },
-    })
+    });
 
-    return new Response(newText.content)
+    return new Response(newText.content);
   } catch (error) {
-    console.error('An error occured:', error)
+    console.error("An error occured:", error);
 
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 422 })
+      return new Response(error.message, { status: 422 });
     }
 
-    return new Response('Could not save text', { status: 500 })
+    return new Response("Could not save text", { status: 500 });
   }
 }

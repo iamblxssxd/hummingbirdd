@@ -1,74 +1,74 @@
-'use client'
+"use client";
 
-import { ColumnDef } from '@tanstack/react-table'
-import { Icons } from '@/components/Icons'
+import { ColumnDef } from "@tanstack/react-table";
+import { Icons } from "@/components/Icons";
 
-import { Checkbox } from '@/components/ui/Checkbox'
-import { WordsTableRowActions } from './WordsTableRowActions'
+import { Checkbox } from "@/components/ui/Checkbox";
+import { WordsTableRowActions } from "./WordsTableRowActions";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 type Word = {
-  id: string
-  word: string
-  definition: string
-  favorite: boolean
-}
+  id: string;
+  word: string;
+  definition: string;
+  favorite: boolean;
+};
 
 export const columns: ColumnDef<Word>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label='Select all'
-        className='translate-y-[2px]'
+        aria-label="Select all"
+        className="translate-y-[2px]"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label='Select row'
-        className='translate-y-[2px]'
+        aria-label="Select row"
+        className="translate-y-[2px]"
       />
     ),
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'word',
-    header: 'Word',
+    accessorKey: "word",
+    header: "Word",
     // TODO filter words
   },
   {
-    accessorKey: 'definition',
-    header: 'Definition',
+    accessorKey: "definition",
+    header: "Definition",
   },
   {
-    accessorKey: 'favorite',
-    header: 'Favorite',
+    accessorKey: "favorite",
+    header: "Favorite",
     cell: ({ row }) => {
       // console.log(row)
 
-      const isFavorite = row.original.favorite
+      const isFavorite = row.original.favorite;
       return (
-        <div className='flex w-[100px] items-center'>
+        <div className="flex w-[100px] items-center">
           {isFavorite ? (
-            <Icons.star className='h-4 w-4 text-primary fill-primary' />
+            <Icons.star className="h-4 w-4 text-primary fill-primary" />
           ) : (
-            <Icons.star className='h-4 w-4 text-muted-foreground' />
+            <Icons.star className="h-4 w-4 text-muted-foreground" />
           )}
         </div>
-      )
+      );
     },
     // TODO handle favorite logic
   },
   {
-    id: 'actions',
+    id: "actions",
     cell: ({ row }) => {
-      return <WordsTableRowActions row={row} />
+      return <WordsTableRowActions row={row} />;
       // console.log(row)
 
       // return (
@@ -93,4 +93,4 @@ export const columns: ColumnDef<Word>[] = [
       // )
     },
   },
-]
+];

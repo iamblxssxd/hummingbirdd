@@ -1,37 +1,37 @@
 interface WordDefinition {
-  id: string
+  id: string;
   wordWise: {
-    id: string
-    fullDefinition: string
-    shortDefinition: string
-    exampleSentence: string
-    hintLevel: string
-  }[]
+    id: string;
+    fullDefinition: string;
+    shortDefinition: string;
+    exampleSentence: string;
+    hintLevel: string;
+  }[];
 }
 
 export async function fetchDefinition(
-  word: string
+  word: string,
 ): Promise<WordDefinition | undefined> {
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Vi2frjcdeyIyEUydliMQ3`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ word: word }),
-  }
+  };
 
   try {
-    const response = await fetch(`/api/v1/wordwise`, requestOptions)
+    const response = await fetch(`/api/v1/wordwise`, requestOptions);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`)
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json()
+    const data = await response.json();
 
-    return data
+    return data;
   } catch (error) {
-    console.error('Error:', error)
+    console.error("Error:", error);
   }
 }

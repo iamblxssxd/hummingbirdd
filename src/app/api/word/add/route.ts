@@ -1,19 +1,19 @@
-import { getAuthSession } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { WordValidator } from '@/lib/validators/word'
-import { z } from 'zod'
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { WordValidator } from "@/lib/validators/word";
+import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const session = await getAuthSession()
+    const session = await getAuthSession();
 
     if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 })
+      return new Response("Unauthorized", { status: 401 });
     }
 
-    const body = await req.json()
+    const body = await req.json();
     const { word, definition, shortDefinition, favorite } =
-      WordValidator.parse(body)
+      WordValidator.parse(body);
 
     // if word exists...
     const wordExists = await db.word.findFirst({
@@ -21,10 +21,10 @@ export async function POST(req: Request) {
         word: word,
         userId: session.user.id,
       },
-    })
+    });
 
     if (wordExists) {
-      return new Response('This word has already been saved', { status: 409 })
+      return new Response("This word has already been saved", { status: 409 });
     }
 
     const newWord = await db.word.create({
@@ -35,14 +35,14 @@ export async function POST(req: Request) {
         shortDefinition: shortDefinition,
         favorite: favorite,
       },
-    })
+    });
 
-    return new Response(newWord.word)
+    return new Response(newWord.word);
   } catch (error) {
-    console.error('An error occurred:', error)
+    console.error("An error occurred:", error);
 
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 422 })
+      return new Response(error.message, { status: 422 });
     }
   }
 }

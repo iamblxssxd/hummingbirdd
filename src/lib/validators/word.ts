@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const WordValidator = z.object({
   word: z.string(),
@@ -6,6 +6,6 @@ export const WordValidator = z.object({
   shortDefinition: z.string(),
   favorite: z.boolean(),
   // wordId: z.string(),
-})
+});
 
-export type CreateWordPayload = z.infer<typeof WordValidator>
+export type CreateWordPayload = z.infer<typeof WordValidator>;
