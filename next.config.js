@@ -8,8 +8,13 @@ const nextConfig = {
     ],
   },
   experimental: {
-    appDir: true,
+    // appDir: true,
+    esmExternals: "loose",
   },
+  // TODO do linting and type checking in CI instead
+  // eslint: { ignoreDuringBuilds: true },
+  // typescript: { ignoreBuildErrors: true },
+  // eslint-disable-next-line @typescript-eslint/require-await
   async rewrites() {
     return [
       {

@@ -1,19 +1,20 @@
-import Link from "next/link";
-import { Icons } from "@/components/Icons";
-import { buttonVariants } from "@/components/ui/Button";
-import ThemeToggle from "@/components/ThemeToggle";
-import { getAuthSession } from "@/lib/auth";
-import UserAccountNav from "@/components/UserAccountNav";
+import Link from "next/link"
+
+import { getAuthSession } from "@/lib/auth"
+import { buttonVariants } from "@/components/ui/Button"
+import { Icons } from "@/components/Icons"
+import ThemeToggle from "@/components/ThemeToggle"
+import UserAccountNav from "@/components/UserAccountNav"
 
 const Navbar = async () => {
-  const session = await getAuthSession();
+  const session = await getAuthSession()
 
   return (
-    <div className="sticky top-0 inset-x-0 h-fit z-[10] py-4 bg-background">
-      <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
-        <Link href="/" className="flex gap-2 items-center">
+    <div className="sticky inset-x-0 top-0 z-[10] h-fit bg-background py-4">
+      <div className="container mx-auto flex h-full max-w-7xl items-center justify-between gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Icons.logo className="h-8 w-9" />
-          <p className="hidden text-lg font-semibold font md:block">
+          <p className="font hidden text-lg font-semibold md:block">
             Hummingbird
           </p>
         </Link>
@@ -28,7 +29,7 @@ const Navbar = async () => {
           )}
         </div>
 
-        <div className="hidden md:flex gap-4 items-center">
+        <div className="hidden items-center gap-4 md:flex">
           <ThemeToggle />
 
           {session?.user ? (
@@ -41,7 +42,7 @@ const Navbar = async () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

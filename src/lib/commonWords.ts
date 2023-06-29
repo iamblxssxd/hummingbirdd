@@ -99,4 +99,4 @@ export const commonWords = [
   "a",
   "an",
   "the",
-];
+]

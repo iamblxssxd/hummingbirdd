@@ -1,29 +1,30 @@
-"use client";
+"use client"
 
-import { useCustomToast } from "@/hooks/use-custom-toast";
-import { toast } from "@/hooks/use-toast";
-import { useText } from "@/hooks/useText";
-import { CreateTextPayload } from "@/lib/validators/text";
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { FC, useState } from "react";
-import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
+import { FC, useState } from "react"
+import { useMutation } from "@tanstack/react-query"
+import axios, { AxiosError } from "axios"
+
+import { CreateTextPayload } from "@/lib/validators/text"
+import { useCustomToast } from "@/hooks/use-custom-toast"
+import { toast } from "@/hooks/use-toast"
+import { useText } from "@/hooks/useText"
+import { Button } from "@/components/ui/Button"
+import { Icons } from "@/components/Icons"
 
 // TODO accept empty definitions array (throws an error when you try to save a text without any definitions)
 interface ReaderActionsProps {
-  readerText: string;
-  title: string | undefined;
+  readerText: string
+  title: string | undefined
   definitions: {
     data: {
       wordWise: {
-        word: string;
-        fullDefinition: string;
-        shortDefinition: string;
+        word: string
+        fullDefinition: string
+        shortDefinition: string
         // favorite: boolean
-      };
-    };
-  }[];
+      }
+    }
+  }[]
 }
 
 const ReaderActions: FC<ReaderActionsProps> = ({
@@ -31,7 +32,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({
   title,
   definitions,
 }) => {
-  const { loginToast } = useCustomToast();
+  const { loginToast } = useCustomToast()
 
   const { mutate: submitText, isLoading } = useMutation({
     mutationFn: async () => {
@@ -41,19 +42,19 @@ const ReaderActions: FC<ReaderActionsProps> = ({
         wordDefinitions: definitions
           .filter((definition) => definition.data?.wordWise !== null)
           .map((definition) => {
-            const wordWiseData = definition.data.wordWise;
+            const wordWiseData = definition.data.wordWise
             return {
               word: wordWiseData.word,
               definition: wordWiseData.fullDefinition,
               shortDefinition: wordWiseData.shortDefinition,
               favorite: false,
-            };
+            }
           }),
-      };
+      }
 
-      console.log(definitions);
-      const { data } = await axios.post("/api/text", payload);
-      return data as string;
+      console.log(definitions)
+      const { data } = await axios.post("/api/text", payload)
+      return data as string
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
@@ -62,7 +63,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({
             title: "Text has been already added.",
             description: "Please add a differente text.",
             variant: "destructive",
-          });
+          })
         }
 
         if (err.response?.status === 422) {
@@ -70,27 +71,27 @@ const ReaderActions: FC<ReaderActionsProps> = ({
             title: "Invalid text length",
             description: "Your text must have at least 3 characters",
             variant: "destructive",
-          });
+          })
         }
 
         if (err.response?.status === 401) {
-          return loginToast();
+          return loginToast()
         }
       }
       toast({
         title: "An error occured",
         description: "Could not save text.",
         variant: "destructive",
-      });
+      })
     },
     onSuccess: () => {
       toast({
         title: "Success!",
         description: "Text has been saved.",
         variant: "default",
-      });
+      })
     },
-  });
+  })
 
   return (
     <div className="flex items-center justify-between px-2">
@@ -135,7 +136,7 @@ const ReaderActions: FC<ReaderActionsProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReaderActions;
+export default ReaderActions

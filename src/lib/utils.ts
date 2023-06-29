@@ -1,40 +1,41 @@
-import { ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { commonWords } from "@/lib/commonWords";
+import { ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+import { commonWords } from "@/lib/commonWords"
 
 interface WordDefinition {
-  id: string;
+  id: string
   wordWise: {
-    word: string;
-    fullDefinition: string;
-    shortDefinition: string;
-    favorite: boolean;
-  };
+    word: string
+    fullDefinition: string
+    shortDefinition: string
+    favorite: boolean
+  }
 }
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export function filterWords(text: string): string[] | undefined {
   if (!text) {
-    return undefined;
+    return undefined
   }
 
   // Use a regular expression to split the text into words
-  const words: string[] = text.toLowerCase().match(/\b\w+\b/g) || [];
+  const words: string[] = text.toLowerCase().match(/\b\w+\b/g) || []
 
   const filteredWords: string[] = words.filter(
-    (word) => !commonWords.includes(word),
-  );
+    (word) => !commonWords.includes(word)
+  )
 
-  const uniqueWords: string[] = Array.from(new Set(filteredWords));
+  const uniqueWords: string[] = Array.from(new Set(filteredWords))
 
-  return uniqueWords;
+  return uniqueWords
 }
 
 export async function fetchDefinition(
-  word: string,
+  word: string
 ): Promise<WordDefinition | undefined> {
   const requestOptions = {
     method: "POST",
@@ -44,19 +45,19 @@ export async function fetchDefinition(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ word: word }),
-  };
+  }
 
   try {
-    const response = await fetch(`/api/v1/wordwise`, requestOptions);
+    const response = await fetch(`/api/v1/wordwise`, requestOptions)
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`)
     }
 
-    const data = await response.json();
+    const data = await response.json()
 
-    return data;
+    return data
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:", error)
   }
 }

@@ -1,20 +1,21 @@
-"use client";
+"use client"
 
-import { User } from "next-auth";
-import { FC } from "react";
+import { FC } from "react"
+import Link from "next/link"
+import { User } from "next-auth"
+import { signOut } from "next-auth/react"
+
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuItem,
-} from "@/components/ui/DropdownMenu";
-import { UserAvatar } from "@/components/UserAvatar";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu"
+import { UserAvatar } from "@/components/UserAvatar"
 
 interface UserAccountNavProps {
-  user: Pick<User, "name" | "image" | "email">;
+  user: Pick<User, "name" | "image" | "email">
 }
 
 const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
@@ -22,7 +23,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
-          className="w-8 h-8"
+          className="h-8 w-8"
           user={{
             name: user.name || null,
             image: user.image || null,
@@ -59,10 +60,10 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
 
         <DropdownMenuItem
           onSelect={(event) => {
-            event.preventDefault();
+            event.preventDefault()
             signOut({
               callbackUrl: `${window.location.origin}/sing-in`,
-            });
+            })
           }}
           className="cursor-pointer"
         >
@@ -70,7 +71,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default UserAccountNav;
+export default UserAccountNav

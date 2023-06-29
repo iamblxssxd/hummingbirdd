@@ -1,19 +1,20 @@
-"use client";
+"use client"
 
-import { ColumnDef } from "@tanstack/react-table";
-import { Icons } from "@/components/Icons";
+import { type ColumnDef } from "@tanstack/react-table"
 
-import { Checkbox } from "@/components/ui/Checkbox";
-import { WordsTableRowActions } from "./WordsTableRowActions";
+import { Checkbox } from "@/components/ui/Checkbox"
+import { Icons } from "@/components/Icons"
+
+import { WordsTableRowActions } from "./WordsTableRowActions"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 type Word = {
-  id: string;
-  word: string;
-  definition: string;
-  favorite: boolean;
-};
+  id: string
+  word: string
+  definition: string
+  favorite: boolean
+}
 
 export const columns: ColumnDef<Word>[] = [
   {
@@ -52,23 +53,23 @@ export const columns: ColumnDef<Word>[] = [
     cell: ({ row }) => {
       // console.log(row)
 
-      const isFavorite = row.original.favorite;
+      const isFavorite = row.original.favorite
       return (
         <div className="flex w-[100px] items-center">
           {isFavorite ? (
-            <Icons.star className="h-4 w-4 text-primary fill-primary" />
+            <Icons.star className="h-4 w-4 fill-primary text-primary" />
           ) : (
             <Icons.star className="h-4 w-4 text-muted-foreground" />
           )}
         </div>
-      );
+      )
     },
     // TODO handle favorite logic
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      return <WordsTableRowActions row={row} />;
+      return <WordsTableRowActions row={row} />
       // console.log(row)
 
       // return (
@@ -93,4 +94,4 @@ export const columns: ColumnDef<Word>[] = [
       // )
     },
   },
-];
+]

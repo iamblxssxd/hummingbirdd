@@ -1,22 +1,23 @@
-import { Text } from "@prisma/client";
-import { FC } from "react";
-import { TextPreview } from "./TextPreview";
+import { FC } from "react"
+import { Text } from "@prisma/client"
+
+import { TextPreview } from "./TextPreview"
 
 interface UserSavedTextsProps {
-  texts: Text[];
+  texts: Text[]
 }
 
 const UserSavedTexts: FC<UserSavedTextsProps> = ({ texts }) => {
   return (
     // TODO quick read button (opens a modal with the text)
-    <ul className="flex flex-col col-span-2">
+    <ul className="col-span-2 flex flex-col">
       {texts.map((text) => (
         <li key={text.id}>
           <TextPreview text={text} />
         </li>
       ))}
     </ul>
-  );
-};
+  )
+}
 
-export default UserSavedTexts;
+export default UserSavedTexts

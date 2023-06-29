@@ -3,20 +3,20 @@ import {
   ChevronRightIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
-} from "@radix-ui/react-icons";
-import { Table } from "@tanstack/react-table";
+} from "@radix-ui/react-icons"
+import { Table } from "@tanstack/react-table"
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/ui/Select"
 
 interface WordsTablePaginationProps<TData> {
-  table: Table<TData>;
+  table: Table<TData>
 }
 
 export function WordsTablePagination<TData>({
@@ -34,7 +34,7 @@ export function WordsTablePagination<TData>({
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
-              table.setPageSize(Number(value));
+              table.setPageSize(Number(value))
             }}
           >
             <SelectTrigger className="h-8 w-[70px]">
@@ -93,5 +93,5 @@ export function WordsTablePagination<TData>({
         </div>
       </div>
     </div>
-  );
+  )
 }

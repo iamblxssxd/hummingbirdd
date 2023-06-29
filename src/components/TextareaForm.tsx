@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
-import { Button, buttonVariants } from "@/components/ui/Button";
-import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/Button"
 import {
   Form,
   FormControl,
@@ -16,8 +16,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/Form";
-import { Textarea } from "@/components/ui/Textarea";
+} from "@/components/ui/Form"
+import { Textarea } from "@/components/ui/Textarea"
 
 const FormSchema = z.object({
   text: z
@@ -28,19 +28,19 @@ const FormSchema = z.object({
     .max(1000, {
       message: "Text must not be longer than 1000 characters.",
     }),
-});
+})
 
 export function TextareaForm() {
-  const router = useRouter();
-  const [userText, setUserText] = useState("");
+  const router = useRouter()
+  const [userText, setUserText] = useState("")
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  });
+  })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setUserText(data.text);
-    router.push(`/reader?text=${encodeURIComponent(data.text)}`);
+    setUserText(data.text)
+    router.push(`/reader?text=${encodeURIComponent(data.text)}`)
   }
 
   return (
@@ -81,5 +81,5 @@ export function TextareaForm() {
         </Link> */}
       </form>
     </Form>
-  );
+  )
 }

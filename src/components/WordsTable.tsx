@@ -1,5 +1,6 @@
-"use client";
+"use client"
 
+import React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -8,7 +9,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from "@tanstack/react-table"
 
 import {
   Table,
@@ -17,15 +18,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/Table";
+} from "@/components/ui/Table"
 
-import { WordsTablePagination } from "./WordsTablePagination";
-import { WordsTableToolbar } from "./WordsTableToolbar";
-import React from "react";
+import { WordsTablePagination } from "./WordsTablePagination"
+import { WordsTableToolbar } from "./WordsTableToolbar"
 
 interface WordsTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
 }
 
 export function WordsTable<TData, TValue>({
@@ -33,8 +33,8 @@ export function WordsTable<TData, TValue>({
   data,
 }: WordsTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
+    []
+  )
 
   const table = useReactTable({
     data,
@@ -47,7 +47,7 @@ export function WordsTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-  });
+  })
 
   // TODO add filer by favorite (might be a good idea to add a verb/noun/adjective tags and filter by them too)
   // TODO optimistic updates for delete/favorite
@@ -67,10 +67,10 @@ export function WordsTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
-                  );
+                  )
                 })}
               </TableRow>
             ))}
@@ -87,7 +87,7 @@ export function WordsTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -108,5 +108,5 @@ export function WordsTable<TData, TValue>({
       </div>
       <WordsTablePagination table={table} />
     </div>
-  );
+  )
 }

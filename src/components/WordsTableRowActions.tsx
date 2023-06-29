@@ -1,31 +1,10 @@
-import React, { useState } from "react";
-import { Row } from "@tanstack/react-table";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import React, { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
+import { Row } from "@tanstack/react-table"
+import axios from "axios"
 
-import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/Dialog";
-
+import { useToast } from "@/hooks/use-toast"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,55 +15,74 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/AlertDialog";
+} from "@/components/ui/AlertDialog"
+import { Button } from "@/components/ui/Button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu"
+import { Icons } from "@/components/Icons"
 
-import { Label } from "./ui/Label";
-import { Input } from "./ui/Input";
-import { Switch } from "./ui/Switch";
-import { Separator } from "./ui/Separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/Dialog"
+import { Input } from "./ui/Input"
+import { Label } from "./ui/Label"
+import { Separator } from "./ui/Separator"
+import { Switch } from "./ui/Switch"
 
 type Word = {
-  id: string;
-  word: string;
-  definition: string;
-  favorite: boolean;
-};
+  id: string
+  word: string
+  definition: string
+  favorite: boolean
+}
 
 interface WordsTableRowActionsProps {
-  row: Row<Word>;
+  row: Row<Word>
 }
 
 export function WordsTableRowActions<TData, Word>({
   row,
 }: WordsTableRowActionsProps) {
-  const [word, setWord] = useState(row.original.word);
-  const [definition, setDefinition] = useState(row.original.definition);
-  const [favorite, setFavorite] = useState(row.original.favorite);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [word, setWord] = useState(row.original.word)
+  const [definition, setDefinition] = useState(row.original.definition)
+  const [favorite, setFavorite] = useState(row.original.favorite)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
-  const router = useRouter();
-  const { toast } = useToast();
+  const router = useRouter()
+  const { toast } = useToast()
 
   // TODO error handling
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async (wordId: string) => {
       const payload = {
         wordId,
-      };
+      }
 
-      await axios.patch("/api/word/favorite", payload);
+      await axios.patch("/api/word/favorite", payload)
 
       // TODO optimistic updates
-      router.refresh();
+      router.refresh()
     },
     onSuccess: () => {
       toast({
         title: "Success!",
         description: "Favorite was toggled!",
         variant: "default",
-      });
+      })
     },
-  });
+  })
 
   const { mutate: updateWord } = useMutation({
     mutationFn: async (wordId: string) => {
@@ -93,12 +91,12 @@ export function WordsTableRowActions<TData, Word>({
         word,
         definition,
         favorite,
-      };
+      }
 
-      setIsDialogOpen(false);
-      await axios.patch("/api/word/update", payload);
+      setIsDialogOpen(false)
+      await axios.patch("/api/word/update", payload)
 
-      router.refresh();
+      router.refresh()
       // TODO optimistic updates
     },
     onSuccess: () => {
@@ -106,20 +104,20 @@ export function WordsTableRowActions<TData, Word>({
         title: "Success!",
         description: "Word has been updated!",
         variant: "default",
-      });
+      })
     },
-  });
+  })
 
   const { mutate: deleteWord } = useMutation({
     mutationFn: async (wordId: string) => {
       const payload = {
         wordId,
-      };
+      }
 
-      setIsDialogOpen(false);
-      await axios.post("/api/word/delete", payload);
+      setIsDialogOpen(false)
+      await axios.post("/api/word/delete", payload)
 
-      router.refresh();
+      router.refresh()
       // TODO optimistic updates
     },
     onSuccess: () => {
@@ -127,11 +125,11 @@ export function WordsTableRowActions<TData, Word>({
         title: "Success!",
         description: "Word has been deleted!",
         variant: "default",
-      });
+      })
     },
-  });
+  })
 
-  console.log(isDialogOpen);
+  console.log(isDialogOpen)
   return (
     // TODO extract to DropdownWidhDialogItems
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -202,7 +200,7 @@ export function WordsTableRowActions<TData, Word>({
                 checked={favorite}
                 onCheckedChange={() => setFavorite((prev) => !prev)}
               />
-              <p className="text-sm text-muted-foreground col-span-2 text-right">
+              <p className="col-span-2 text-right text-sm text-muted-foreground">
                 Favorite can be toggled later.
               </p>
             </div>
@@ -231,5 +229,5 @@ export function WordsTableRowActions<TData, Word>({
         </AlertDialogContent>
       </AlertDialog>
     </Dialog>
-  );
+  )
 }

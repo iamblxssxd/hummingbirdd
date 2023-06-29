@@ -1,35 +1,37 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Textarea } from "@/components/ui/Textarea";
-import { Button, buttonVariants } from "@/components/ui/Button";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { CreateTextPayload } from "@/lib/validators/text";
-import { toast } from "@/hooks/use-toast";
-import { useCustomToast } from "@/hooks/use-custom-toast";
-import { useText } from "@/hooks/useText";
-import { Input } from "./ui/Input";
+import { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
+import axios, { AxiosError } from "axios"
+
+import { CreateTextPayload } from "@/lib/validators/text"
+import { useCustomToast } from "@/hooks/use-custom-toast"
+import { toast } from "@/hooks/use-toast"
+import { useText } from "@/hooks/useText"
+import { Button, buttonVariants } from "@/components/ui/Button"
+import { Textarea } from "@/components/ui/Textarea"
+
+import { Input } from "./ui/Input"
 
 interface TextareaSubmitProps {}
 
 const TextareaSubmit = () => {
-  const [title, setTitle] = useState<string>("");
-  const [text, setText] = useState<string>("");
-  const { updateText } = useText();
+  const [title, setTitle] = useState<string>("")
+  const [text, setText] = useState<string>("")
+  const { updateText } = useText()
 
   // in larger projects:
   // const text = useText((state) => state.text)
 
-  const router = useRouter();
-  const { loginToast } = useCustomToast();
+  const router = useRouter()
+  const { loginToast } = useCustomToast()
 
   const submitText = () => {
-    updateText(text, title);
-    router.push("/reader");
-  };
+    updateText(text, title)
+    router.push("/reader")
+  }
 
   // const { mutate: createText, isLoading } = useMutation({
   //   mutationFn: async () => {
@@ -74,8 +76,8 @@ const TextareaSubmit = () => {
   // })
 
   return (
-    <div className="container flex flex-col  h-full max-w-3xl mx-auto space-y-6">
-      <h1 className="scroll-m-20 text-4xl font-extrabold lg:text-5xl font-irvin">
+    <div className="container mx-auto flex  h-full max-w-3xl flex-col space-y-6">
+      <h1 className="scroll-m-20 font-irvin text-4xl font-extrabold lg:text-5xl">
         Your text:
       </h1>
       <Input
@@ -100,7 +102,7 @@ const TextareaSubmit = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TextareaSubmit;
+export default TextareaSubmit

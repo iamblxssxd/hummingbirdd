@@ -1,27 +1,28 @@
-import FeaturedTexts from "@/components/FeaturedTexts";
-import TextareaSubmit from "@/components/TextareaSubmit";
-import WordTooltip from "@/components/WordTooltip";
-import { getAuthSession } from "@/lib/auth";
-import Balancer from "react-wrap-balancer";
+import Balancer from "react-wrap-balancer"
+
+import { getAuthSession } from "@/lib/auth"
+import FeaturedTexts from "@/components/FeaturedTexts"
+import TextareaSubmit from "@/components/TextareaSubmit"
+import WordTooltip from "@/components/WordTooltip"
 
 export default async function Home() {
-  const session = await getAuthSession();
+  const session = await getAuthSession()
 
   return (
     <>
       {session?.user ? (
-        <div className="flex flex-col justify-start max-w-5xl mx-auto pt-12">
-          <div className="flex flex-wrap gap-8 mb-8">
+        <div className="mx-auto flex max-w-5xl flex-col justify-start pt-12">
+          <div className="mb-8 flex flex-wrap gap-8">
             <FeaturedTexts />
           </div>
           <TextareaSubmit />
         </div>
       ) : (
-        <div className="container max-w-4xl mx-auto pt-12">
-          <h1 className="scroll-m-20 text-4xl font-extrabold lg:text-5xl font-irvin">
+        <div className="container mx-auto max-w-4xl pt-12">
+          <h1 className="scroll-m-20 font-irvin text-4xl font-extrabold lg:text-5xl">
             <Balancer>Read any article with confidence</Balancer>
           </h1>
-          <p className=" tracking-normal [&:not(:first-child)]:mt-6 font-acaslonpro text-2xl">
+          <p className=" font-acaslonpro text-2xl tracking-normal [&:not(:first-child)]:mt-6">
             <Balancer>
               In a world where information{" "}
               <WordTooltip
@@ -43,5 +44,5 @@ export default async function Home() {
         </div>
       )}
     </>
-  );
+  )
 }

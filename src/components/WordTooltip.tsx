@@ -1,19 +1,20 @@
-"use client";
+"use client"
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react"
+import { usePrevious } from "@mantine/hooks"
+
+import { Button } from "@/components/ui/Button"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/Tooltip";
-import { Button } from "@/components/ui/Button";
-import { Icons } from "@/components/Icons";
-import { usePrevious } from "@mantine/hooks";
+} from "@/components/ui/Tooltip"
+import { Icons } from "@/components/Icons"
 
 interface WordTooltipProps {
-  word: string;
-  definition: string | undefined;
+  word: string
+  definition: string | undefined
 }
 
 const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
@@ -23,13 +24,13 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
         <TooltipTrigger className="text-green-600 dark:text-pink-300">
           {word}{" "}
         </TooltipTrigger>
-        <TooltipContent className="flex gap-1 items-center justify-center">
+        <TooltipContent className="flex items-center justify-center gap-1">
           {/* TODO add a button for adding a word to the user's list of words */}
-          <p className="leading-7 font-inter text-lg">{definition}</p>
+          <p className="font-inter text-lg leading-7">{definition}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  );
-};
+  )
+}
 
-export default WordTooltip;
+export default WordTooltip

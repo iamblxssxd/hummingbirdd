@@ -1,22 +1,23 @@
-import { db } from "@/lib/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { nanoid } from "nanoid";
-import { NextAuthOptions, getServerSession } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { nanoid } from "nanoid"
+import { getServerSession, NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+
+import { db } from "@/lib/db"
 
 function getGoogleCredentials() {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const clientId = process.env.GOOGLE_CLIENT_ID
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
 
   if (!clientId || clientId.length === 0) {
-    throw new Error("No clientId for google provider");
+    throw new Error("No clientId for google provider")
   }
 
   if (!clientSecret || clientSecret.length === 0) {
-    throw new Error("No clientSecret fro google provider");
+    throw new Error("No clientSecret fro google provider")
   }
 
-  return { clientId, clientSecret };
+  return { clientId, clientSecret }
 }
 
 export const authOptions: NextAuthOptions = {
@@ -36,14 +37,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ token, session }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-        session.user.username = token.username;
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.image = token.picture
+        session.user.username = token.username
       }
 
-      return session;
+      return session
     },
 
     async jwt({ token, user }) {
@@ -51,11 +52,11 @@ export const authOptions: NextAuthOptions = {
         where: {
           email: token.email,
         },
-      });
+      })
 
       if (!dbUser) {
-        token.id = user!.id;
-        return token;
+        token.id = user!.id
+        return token
       }
 
       if (!dbUser.username) {
@@ -66,7 +67,7 @@ export const authOptions: NextAuthOptions = {
           data: {
             username: nanoid(10),
           },
-        });
+        })
       }
 
       return {
@@ -75,12 +76,12 @@ export const authOptions: NextAuthOptions = {
         email: dbUser.email,
         picture: dbUser.image,
         username: dbUser.username,
-      };
+      }
     },
     redirect() {
-      return "/";
+      return "/"
     },
   },
-};
+}
 
-export const getAuthSession = () => getServerSession(authOptions);
+export const getAuthSession = () => getServerSession(authOptions)

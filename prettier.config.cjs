@@ -1,4 +1,8 @@
+// @ts-check
+
 /** @type {import('prettier').Config} */
+/** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
+
 module.exports = {
   endOfLine: "lf",
   semi: false,

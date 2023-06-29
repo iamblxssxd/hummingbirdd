@@ -1,6 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
-import AddNewText from "@/components/AddNewText";
+import Image from "next/image"
+import Link from "next/link"
+
+import AddNewText from "@/components/AddNewText"
 
 /* TODO separate typography into components */
 
@@ -10,7 +11,7 @@ const FeaturedTexts = () => {
       <AddNewText />
       <div className="flex max-w-full flex-1 flex-col gap-4">
         <div>
-          <h2 className="font-semibold text-lg leading-6 tracking-tight">
+          <h2 className="text-lg font-semibold leading-6 tracking-tight">
             Continue reading from where you left
           </h2>
           <p className="text-sm text-muted-foreground">Resume your journey.</p>
@@ -23,12 +24,12 @@ const FeaturedTexts = () => {
             <Link
               href="#"
               aria-label="Open Text"
-              className="block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none focus:outline-focus"
+              className="focus:outline-focus block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
             >
               <Image
                 width={160}
                 height={160}
-                className="aspect-square w-full rounded-md bg-bgTintedBase"
+                className="bg-bgTintedBase aspect-square w-full rounded-md"
                 src="https://media.newyorker.com/photos/6584b5c7819f49f186546a34/master/w_2240,c_limit/240101_r43563.jpg"
                 alt="some alt"
               />
@@ -49,12 +50,12 @@ const FeaturedTexts = () => {
             <Link
               href="#"
               aria-label="Open Text"
-              className="block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none focus:outline-focus"
+              className="focus:outline-focus block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
             >
               <Image
                 width={100}
                 height={160}
-                className="aspect-square w-full rounded-md bg-bgTintedBase"
+                className="bg-bgTintedBase aspect-square w-full rounded-md"
                 src="https://media.newyorker.com/photos/65820d4c603d5e5d08d74af1/master/w_2240,c_limit/Cadava-Citizen-Smugglers.jpg"
                 alt="some alt"
               />
@@ -75,12 +76,12 @@ const FeaturedTexts = () => {
             <Link
               href="#"
               aria-label="Open Text"
-              className="block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none focus:outline-focus"
+              className="focus:outline-focus block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
             >
               <Image
                 width={100}
                 height={160}
-                className="aspect-square w-full rounded-md bg-bgTintedBase"
+                className="bg-bgTintedBase aspect-square w-full rounded-md"
                 src="https://media.newyorker.com/photos/6580839d3d0e5436728a0155/master/w_2240,c_limit/Knight-Ransomeware-Hack.jpg"
                 alt="some alt"
               />
@@ -104,12 +105,12 @@ const FeaturedTexts = () => {
             <Link
               href="#"
               aria-label="Open Text"
-              className="block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none focus:outline-focus"
+              className="focus:outline-focus block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
             >
               <Image
                 width={100}
                 height={160}
-                className="aspect-square w-full rounded-md bg-bgTintedBase"
+                className="bg-bgTintedBase aspect-square w-full rounded-md"
                 src="https://media.newyorker.com/photos/657a1a5fd342198010b4e89f/4:3/w_2240,c_limit/Theater_Final.jpg"
                 alt="some alt"
               />
@@ -128,7 +129,7 @@ const FeaturedTexts = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default FeaturedTexts;
+export default FeaturedTexts

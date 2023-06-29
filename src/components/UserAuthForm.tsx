@@ -1,45 +1,46 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { signIn } from "next-auth/react";
-import { useToast } from "@/hooks/use-toast";
+import * as React from "react"
+import { signIn } from "next-auth/react"
+
+import { cn } from "@/lib/utils"
+import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/Button"
+import { Input } from "@/components/ui/Input"
+import { Label } from "@/components/ui/Label"
+import { Icons } from "@/components/Icons"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const { toast } = useToast();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const { toast } = useToast()
 
   async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
+    event.preventDefault()
+    setIsLoading(true)
 
     setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+      setIsLoading(false)
+    }, 3000)
   }
 
   const loginWithGoogle = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
-      await signIn("google");
+      await signIn("google")
     } catch (error) {
       // TODO toast notification
       toast({
         title: "There was a problem",
         description: "There was a problem logging in with google",
         variant: "destructive",
-      });
+      })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -91,5 +92,5 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         Google
       </Button>
     </div>
-  );
+  )
 }

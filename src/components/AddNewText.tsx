@@ -1,6 +1,12 @@
-"use client";
+"use client"
 
-import { Icons } from "./Icons";
+import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { useText } from "@/hooks/useText"
+import { Button } from "@/components/ui/Button"
 import {
   Drawer,
   DrawerClose,
@@ -10,12 +16,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/Drawer";
-import { Button } from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from "@/components/ui/Drawer"
 import {
   Form,
   FormControl,
@@ -24,10 +25,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/Form";
-import { Textarea } from "./ui/Textarea";
-import { useText } from "@/hooks/useText";
-import { Input } from "@/components/ui/Input";
+} from "@/components/ui/Form"
+import { Input } from "@/components/ui/Input"
+import { Icons } from "@/components/Icons"
+
+import { Textarea } from "./ui/Textarea"
 
 // TODO create an optional author/source field
 // TODO fix onClick on the text field (it shouldn't scroll to the top of the text)
@@ -48,30 +50,30 @@ const textFormSchema = z.object({
     .max(1000, {
       message: "Text must not be longer than 1000 characters.",
     }),
-});
+})
 
-type TextFormValues = z.infer<typeof textFormSchema>;
+type TextFormValues = z.infer<typeof textFormSchema>
 
 // This can come from the database or API.
 const defaultValues: TextFormValues = {
   title: "",
   text: "",
-};
+}
 
 export default function AddNewText() {
-  const { updateText } = useText();
-  const router = useRouter();
+  const { updateText } = useText()
+  const router = useRouter()
 
   const form = useForm<TextFormValues>({
     resolver: zodResolver(textFormSchema),
     defaultValues,
-  });
+  })
 
   function onSubmit(data: TextFormValues) {
-    updateText(data.text, data.title);
+    updateText(data.text, data.title)
     // TODO Generate a random ID for the text
     // router.push(`/reader?text=${encodeURIComponent(data.text)}`)
-    router.push(`/reader`);
+    router.push(`/reader`)
   }
 
   return (
@@ -79,7 +81,7 @@ export default function AddNewText() {
       <Drawer>
         <div className="flex w-full flex-col gap-4 lg:w-min">
           <div>
-            <h2 className="font-semibold text-lg leading-6 tracking-tight">
+            <h2 className="text-lg font-semibold leading-6 tracking-tight">
               Read something new
             </h2>
             <p className="text-sm text-muted-foreground">Could be any text.</p>
@@ -89,11 +91,11 @@ export default function AddNewText() {
             <div>
               <Button
                 variant="outline"
-                className="h-36 w-60 lg:h-40 flex border-[1px] rounded-md"
+                className="flex h-36 w-60 rounded-md border-[1px] lg:h-40"
               >
-                <div className="relative flex flex-1 flex-col items-center justify-center rounded-md p-5 focus-within:text-textBase hover:text-textBase hover:no-underline">
-                  <Icons.addText className="flex items-center justify-center rounded-full p-2 h-8 w-8" />
-                  <span className="text-xl font-bold text-textBase ng-star-inserted">
+                <div className="focus-within:text-textBase hover:text-textBase relative flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
+                  <Icons.addText className="flex h-8 w-8 items-center justify-center rounded-full p-2" />
+                  <span className="text-textBase ng-star-inserted text-xl font-bold">
                     Add text
                   </span>
                 </div>
@@ -141,7 +143,7 @@ export default function AddNewText() {
                       <FormControl>
                         <Textarea
                           placeholder="Paste your text here"
-                          className="resize-none h-full"
+                          className="h-full resize-none"
                           {...field}
                         />
                       </FormControl>
@@ -167,5 +169,5 @@ export default function AddNewText() {
         </DrawerContent>
       </Drawer>
     </>
-  );
+  )
 }

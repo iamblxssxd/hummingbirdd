@@ -1,10 +1,9 @@
-import Link from "next/link";
-import { Icons } from "@/components/Icons";
+import Link from "next/link"
 
-import { cn } from "@/lib/utils";
-
-import { UserAuthForm } from "@/components/UserAuthForm";
-import WordTooltip from "@/components/WordTooltip";
+import { cn } from "@/lib/utils"
+import { Icons } from "@/components/Icons"
+import { UserAuthForm } from "@/components/UserAuthForm"
+import WordTooltip from "@/components/WordTooltip"
 
 export default function AuthenticationPage() {
   return (
@@ -59,5 +58,5 @@ export default function AuthenticationPage() {
         </div>
       </div>
     </>
-  );
+  )
 }

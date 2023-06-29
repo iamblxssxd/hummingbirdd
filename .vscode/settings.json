@@ -1,14 +1,16 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // "liveServer.settings.port": 3001,
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
   },
-  "prettier.ignorePath": "",
-  "prettier.jsxSingleQuote": true,
-  "prettier.singleAttributePerLine": true,
-  "prettier.singleQuote": true,
-  "liveServer.settings.port": 3002
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["tw=\"([^\"]*)\""]
+  ],
+  "markdownlint.config": {
+    "MD033": {
+      "allowed_elements": ["img", "p", "a"]
+    },
+    "MD045": false
+  }
 }

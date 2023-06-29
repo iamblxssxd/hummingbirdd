@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { Table } from "@tanstack/react-table";
+import { Cross2Icon } from "@radix-ui/react-icons"
+import { Table } from "@tanstack/react-table"
 
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button"
+import { Input } from "@/components/ui/Input"
 
 interface WordsTableToolbarProps<TData> {
-  table: Table<TData>;
+  table: Table<TData>
 }
 
 export function WordsTableToolbar<TData>({
   table,
 }: WordsTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
   return (
     <div className="flex items-center justify-between">
@@ -38,5 +38,5 @@ export function WordsTableToolbar<TData>({
         )}
       </div>
     </div>
-  );
+  )
 }
