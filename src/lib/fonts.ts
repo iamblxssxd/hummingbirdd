@@ -3,7 +3,7 @@ import localFont from 'next/font/local'
 
 export const fontInter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  // variable: '--font-inter',
 })
 
 export const fontSantaCatarina = localFont({

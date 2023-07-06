@@ -63,7 +63,7 @@ module.exports = {
         inter: ['var(--font-inter)'],
         santa: ['var(--font-santa-catarina)'],
         acaslonpro: ['var(--font-acaslonpro)'],
-        irvin: ['var(--font-irvin)']
+        irvin: ['var(--font-irvin)'],
       },
       keyframes: {
         'accordion-down': {

@@ -22,11 +22,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    // TODO delete inter variable from the config (variable is not working?)
     <html
       lang='en'
       className={cn(
         'antialiased',
-        fontInter.variable,
+        fontInter.className,
         fontSantaCatarina.variable,
         fontAcaslonpro.variable,
         fontIrvin.variable

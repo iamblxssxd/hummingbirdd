@@ -10,6 +10,7 @@ import { FC, useState } from 'react'
 import { Icons } from '@/components/Icons'
 import { Button } from '@/components/ui/Button'
 
+// TODO accept empty definitions array (throws an error when you try to save a text without any definitions)
 interface ReaderActionsProps {
   readerText: string
   title: string
@@ -19,7 +20,7 @@ interface ReaderActionsProps {
         word: string
         fullDefinition: string
         shortDefinition: string
-        favorite: boolean
+        // favorite: boolean
       }
     }
   }[]
@@ -54,7 +55,6 @@ const ReaderActions: FC<ReaderActionsProps> = ({
       const { data } = await axios.post('/api/text', payload)
       return data as string
     },
-
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {

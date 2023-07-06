@@ -41,7 +41,6 @@ export function TextareaForm() {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     setUserText(data.text)
     router.push(`/reader?text=${encodeURIComponent(data.text)}`)
-    console.log('hello!')
   }
 
   return (

@@ -1,10 +1,11 @@
 interface WordDefinition {
   id: string
   wordWise: {
+    id: string
     fullDefinition: string
     shortDefinition: string
     exampleSentence: string
-    hintLevel: number
+    hintLevel: string
   }[]
 }
 

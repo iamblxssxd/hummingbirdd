@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -9,17 +9,14 @@ import {
 } from '@/components/ui/Tooltip'
 import { Button } from '@/components/ui/Button'
 import { Icons } from '@/components/Icons'
+import { usePrevious } from '@mantine/hooks'
 
 interface WordTooltipProps {
   word: string
   definition: string | undefined
-  onAddWord: () => void
 }
 
-const WordTooltip: FC<WordTooltipProps> = ({ word, definition, onAddWord }) => {
-  // TODO check if the user has a word saved
-  const [isWordAdded, setIsWordAdded] = useState<boolean>(false)
-
+const WordTooltip: FC<WordTooltipProps> = ({ word, definition }) => {
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
@@ -27,23 +24,8 @@ const WordTooltip: FC<WordTooltipProps> = ({ word, definition, onAddWord }) => {
           {word}{' '}
         </TooltipTrigger>
         <TooltipContent className='flex gap-1 items-center justify-center'>
-          <p className='leading-7 pr-2 font-inter text-lg'>{definition}</p>
-          <Button
-            onClick={onAddWord}
-            variant='secondary'
-            size='sm'
-            className='h-8 w-8'>
-            <Icons.add
-              className={`h-4 w-4 rotate-${isWordAdded ? '0' : '45'} scale-${
-                isWordAdded ? '100' : '0'
-              } transition-all`}
-            />
-            <Icons.remove
-              className={`absolute h-4 w-4 rotate-${
-                isWordAdded ? '-45' : '0'
-              } scale-${isWordAdded ? '0' : '100'} transition-all`}
-            />
-          </Button>
+          {/* TODO add a button for adding a word to the user's list of words */}
+          <p className='leading-7 font-inter text-lg'>{definition}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
