@@ -9,7 +9,7 @@ import { WordsTableRowActions } from "./WordsTableRowActions"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-type Word = {
+interface Word {
   id: string
   word: string
   definition: string

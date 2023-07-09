@@ -16,6 +16,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const { toast } = useToast()
 
+  // TODO fix auth form
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
     setIsLoading(true)
@@ -24,6 +25,21 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setIsLoading(false)
     }, 3000)
   }
+
+  //     setIsLoading(true)
+
+  //   try {
+  //     await signIn('google')
+  //   } catch (error) {
+  //     toast({
+  //       title: 'Error',
+  //       description: 'There was an error logging in with Google',
+  //       variant: 'destructive',
+  //     })
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   const loginWithGoogle = async () => {
     setIsLoading(true)

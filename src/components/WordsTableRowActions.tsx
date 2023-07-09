@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useMutation } from "@tanstack/react-query"
-import { Row } from "@tanstack/react-table"
+import { type Row } from "@tanstack/react-table"
 import axios from "axios"
 
 import { useToast } from "@/hooks/use-toast"
@@ -52,9 +52,7 @@ interface WordsTableRowActionsProps {
   row: Row<Word>
 }
 
-export function WordsTableRowActions<TData, Word>({
-  row,
-}: WordsTableRowActionsProps) {
+export function WordsTableRowActions({ row }: WordsTableRowActionsProps) {
   const [word, setWord] = useState(row.original.word)
   const [definition, setDefinition] = useState(row.original.definition)
   const [favorite, setFavorite] = useState(row.original.favorite)

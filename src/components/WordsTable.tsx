@@ -2,13 +2,13 @@
 
 import React from "react"
 import {
-  ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  type ColumnDef,
+  type ColumnFiltersState,
 } from "@tanstack/react-table"
 
 import {

@@ -1,8 +1,8 @@
 "use client"
 
-import { FC } from "react"
+import { type FC } from "react"
 import Link from "next/link"
-import { User } from "next-auth"
+import { type User } from "next-auth"
 import { signOut } from "next-auth/react"
 
 import {

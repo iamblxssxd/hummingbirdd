@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useEffect, useState, type FC } from "react"
+import React, { type FC } from "react"
 import { useRouter } from "next/navigation"
 import { type Text } from "@prisma/client"
-import { useMutation, useQueries, useQuery } from "@tanstack/react-query"
+import { useMutation, useQueries } from "@tanstack/react-query"
 import axios, { AxiosError } from "axios"
 import { Balancer } from "react-wrap-balancer"
 
@@ -23,8 +23,6 @@ interface ReaderProps {
 // TODO refactor this component (split it into smaller components/hooks)
 const Reader: FC<ReaderProps> = ({ userText }) => {
   const { text, title } = useText()
-  // const [currentText, setCurrentText] = useState(userText?.content || text)
-  // const [currentTitle, setCurrentTitle] = useState(userText?.title || title)
 
   const router = useRouter()
   const { loginToast } = useCustomToast()
@@ -86,6 +84,7 @@ const Reader: FC<ReaderProps> = ({ userText }) => {
     },
   })
 
+  // TODO refactor this into a custom hook (?)
   const { mutate: createText, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: CreateTextPayload = {
@@ -126,7 +125,7 @@ const Reader: FC<ReaderProps> = ({ userText }) => {
       })
     },
     // TODO fix redirect (should be /read/textId)
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.push(`/reader`)
     },
   })

@@ -93,11 +93,9 @@ export default function AddNewText() {
                 variant="outline"
                 className="flex h-36 w-60 rounded-md border-[1px] lg:h-40"
               >
-                <div className="focus-within:text-textBase hover:text-textBase relative flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
+                <div className="relative flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
                   <Icons.addText className="flex h-8 w-8 items-center justify-center rounded-full p-2" />
-                  <span className="text-textBase ng-star-inserted text-xl font-bold">
-                    Add text
-                  </span>
+                  <span className="text-xl font-bold">Add text</span>
                 </div>
               </Button>
             </div>

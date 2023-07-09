@@ -20,8 +20,10 @@ export async function PATCH(req: Request) {
 
     const body = await req.json()
 
-    const { word, definition, favorite, wordId } =
-      WordUpdateValidator.parse(body)
+    // const { word, definition, favorite, wordId } =
+    //   WordUpdateValidator.parse(body)
+
+    const { wordId } = WordUpdateValidator.parse(body)
 
     const existingWord = await db.word.findFirst({
       where: {
@@ -34,14 +36,15 @@ export async function PATCH(req: Request) {
       return new Response("Word not found", { status: 404 })
     }
 
-    const updatedWord = await db.word.update({
-      where: { id: wordId },
-      data: {
-        word: word,
-        definition: definition,
-        favorite: favorite,
-      },
-    })
+    // TODO updateWord
+    // const updatedWord = await db.word.update({
+    //   where: { id: wordId },
+    //   data: {
+    //     word: word,
+    //     definition: definition,
+    //     favorite: favorite,
+    //   },
+    // })
 
     return new Response("OK")
   } catch (error) {

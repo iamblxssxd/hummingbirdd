@@ -9,8 +9,8 @@ const FavoriteValidator = z.object({
 
 export async function PATCH(req: Request) {
   try {
-    const body = await req.json()
-    const { wordId } = FavoriteValidator.parse(body)
+    const json = await req.json()
+    const { wordId } = FavoriteValidator.parse(json)
 
     const session = await getAuthSession()
 
@@ -30,11 +30,11 @@ export async function PATCH(req: Request) {
       return new Response("Word not found", { status: 404 })
     }
 
-    // Update the favorite property of the word and save changes to the database
-    const updatedWord = await db.word.update({
-      where: { id: word.id },
-      data: { favorite: !word.favorite },
-    })
+    // TODO Update the favorite property of the word and save changes to the database
+    // const updatedWord = await db.word.update({
+    //   where: { id: word.id },
+    //   data: { favorite: !word.favorite },
+    // })
 
     return new Response("OK")
   } catch (error) {

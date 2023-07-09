@@ -1,13 +1,12 @@
 "use client"
 
-import { FC, useState } from "react"
+import { type FC } from "react"
 import { useMutation } from "@tanstack/react-query"
 import axios, { AxiosError } from "axios"
 
-import { CreateTextPayload } from "@/lib/validators/text"
+import { type CreateTextPayload } from "@/lib/validators/text"
 import { useCustomToast } from "@/hooks/use-custom-toast"
 import { toast } from "@/hooks/use-toast"
-import { useText } from "@/hooks/useText"
 import { Button } from "@/components/ui/Button"
 import { Icons } from "@/components/Icons"
 

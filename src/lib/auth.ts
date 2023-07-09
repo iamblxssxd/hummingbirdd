@@ -1,6 +1,6 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { nanoid } from "nanoid"
-import { getServerSession, NextAuthOptions } from "next-auth"
+import { getServerSession, type NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 
 import { db } from "@/lib/db"
@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/require-await
     async session({ token, session }) {
       if (token) {
         session.user.id = token.id
@@ -55,7 +56,7 @@ export const authOptions: NextAuthOptions = {
       })
 
       if (!dbUser) {
-        token.id = user!.id
+        token.id = user.id
         return token
       }
 

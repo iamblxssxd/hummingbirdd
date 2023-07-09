@@ -1,6 +1,5 @@
 import Link from "next/link"
 
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/Icons"
 import { UserAuthForm } from "@/components/UserAuthForm"
 import WordTooltip from "@/components/WordTooltip"

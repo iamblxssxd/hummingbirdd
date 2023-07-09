@@ -29,7 +29,7 @@ export function TextPreview({ text }: TextPreviewProps) {
         <Link
           href={`/read/${text.id}`}
           aria-label="Open Text"
-          className="focus:outline-focus block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
+          className="block rounded-md ring-offset-1 transition-opacity hover:opacity-80 hover:transition-none"
         >
           <div className="grid h-12 w-12 shrink-0">
             {/* TODO random color */}

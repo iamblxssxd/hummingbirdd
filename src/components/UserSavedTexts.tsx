@@ -1,5 +1,5 @@
-import { FC } from "react"
-import { Text } from "@prisma/client"
+import { type FC } from "react"
+import { type Text } from "@prisma/client"
 
 import { TextPreview } from "./TextPreview"
 

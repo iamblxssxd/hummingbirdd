@@ -1,16 +1,13 @@
 "use client"
 
-import { useEffect, useState, type FC } from "react"
-import { usePrevious } from "@mantine/hooks"
+import { type FC } from "react"
 
-import { Button } from "@/components/ui/Button"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/Tooltip"
-import { Icons } from "@/components/Icons"
 
 interface WordTooltipProps {
   word: string

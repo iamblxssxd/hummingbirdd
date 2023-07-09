@@ -1,3 +1,3 @@
-import { type Word } from "@prisma/client"
+// import { type Word } from "@prisma/client"
 
-export type ExtendedWord = Word & {}
+// export type ExtendedWord = Word & {}

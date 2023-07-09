@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/lib/auth"
 import { db } from "@/lib/db"
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await getAuthSession()
 
