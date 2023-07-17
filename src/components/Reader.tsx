@@ -139,7 +139,7 @@ const Reader: FC<ReaderProps> = ({ userText }) => {
         {currentTitle}
       </h1>
       {currentText && (
-        <div className=" font-acaslonpro text-2xl tracking-normal [&:not(:first-child)]:mt-6">
+        <div className="font-acaslonpro text-2xl tracking-normal [&:not(:first-child)]:mt-6">
           <Balancer>
             {/* <div className='text-4xl font-acaslonpro'> */}
             {currentText.split(" ").map((word, index) => {

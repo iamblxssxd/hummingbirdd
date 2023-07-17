@@ -60,7 +60,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        inter: ["var(--font-inter)"],
+        inter: ["Inter", "sans-serif"],
         santa: ["var(--font-santa-catarina)"],
         acaslonpro: ["var(--font-acaslonpro)"],
         irvin: ["var(--font-irvin)"],
