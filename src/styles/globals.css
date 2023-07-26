@@ -82,3 +82,46 @@
     @apply px-4;
   }
 }
+
+@layer utilities {
+  .bg-gradient-conic-tr-tl {
+    background-image: linear-gradient(
+      to right,
+      hsla(194deg, 100%, 70%, 0.8),
+      hsla(269deg, 100%, 75%, 0.6),
+      hsla(346deg, 100%, 75%, 0.6)
+    );
+  }
+  /* .bg-gradient-conic-tr-tl {
+    background-image: radial-gradient(
+        ellipse 31% 108% at bottom left,
+        hsla(194deg, 100%, 70%, 0.8),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 31% 66% at center left,
+        hsla(269deg, 100%, 75%, 0.6) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 31% 190% at top left,
+        hsla(346deg, 100%, 75%, 0.6) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 31% 108% at top right,
+        hsla(194deg, 100%, 70%, 0.8),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 31% 66% at center right,
+        hsla(269deg, 100%, 75%, 0.6) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 31% 190% at bottom right,
+        hsla(346deg, 100%, 75%, 0.6) 0px,
+        transparent 50%
+      );
+  } */
+}

@@ -27,9 +27,9 @@ import {
   FormMessage,
 } from "@/components/ui/Form"
 import { Input } from "@/components/ui/Input"
+import { Spotlight, SpotlightCard } from "@/components/ui/Spotlight"
+import { Textarea } from "@/components//ui/Textarea"
 import { Icons } from "@/components/Icons"
-
-import { Textarea } from "./ui/Textarea"
 
 // TODO create an optional author/source field
 // TODO fix onClick on the text field (it shouldn't scroll to the top of the text)
@@ -86,19 +86,51 @@ export default function AddNewText() {
             </h2>
             <p className="text-sm text-muted-foreground">Could be any text.</p>
           </div>
-          <DrawerTrigger asChild className="">
+          <DrawerTrigger className="">
             {/* TODO add animation on hover */}
-            <div>
-              <Button
-                variant="outline"
-                className="flex h-36 w-60 rounded-md border-[1px] lg:h-40"
-              >
-                <div className="relative flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
-                  <Icons.addText className="flex h-8 w-8 items-center justify-center rounded-full p-2" />
-                  <span className="text-xl font-bold">Add text</span>
+            <Spotlight className="group flex w-full lg:h-full">
+              <SpotlightCard>
+                <div className="relative z-10 flex h-36 w-60 overflow-hidden rounded-[inherit] bg-background lg:h-40">
+                  {/* Radial gradient */}
+                  <div
+                    className="pointer-events-none absolute bottom-0 left-1/2 -z-10 aspect-square w-1/2 -translate-x-1/2 translate-y-1/2"
+                    aria-hidden="true"
+                  >
+                    <div className="bg-gradient-conic-tr-tl absolute inset-0 translate-x-0 rounded-full blur-[80px]"></div>
+                  </div>
                 </div>
-              </Button>
-            </div>
+                <Button
+                  variant="outline"
+                  className="absolute left-1/2 top-1/2 z-40 flex h-36 w-full -translate-x-1/2 -translate-y-1/2 border-none bg-transparent hover:bg-transparent lg:h-40"
+                >
+                  <div className="flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
+                    <Icons.addText className="flex h-8 w-8 items-center justify-center rounded-full p-2" />
+                    <span className="text-xl font-bold">Add text</span>
+                  </div>
+                </Button>
+              </SpotlightCard>
+            </Spotlight>
+            {/* <Spotlight className="group flex w-full lg:h-full">
+              <SpotlightCard>
+                <div className="relative z-10 flex h-36 w-60 overflow-hidden rounded-[inherit] bg-background lg:h-40">
+                  <div
+                    className="pointer-events-none absolute bottom-0 left-1/2 -z-10 aspect-square w-1/2 -translate-x-1/2 translate-y-1/2"
+                    aria-hidden="true"
+                  >
+                    <div className="bg-gradient-conic-tr-tl absolute inset-0 translate-x-0 rounded-full blur-[80px]"></div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="z-40 flex h-36 w-full items-center border-none bg-transparent text-center hover:bg-transparent lg:h-40"
+                  >
+                    <div className="flex flex-1 flex-col items-center justify-center rounded-md p-5 hover:no-underline">
+                      <Icons.addText className="flex h-8 w-8 items-center justify-center rounded-full p-2" />
+                      <span className="text-xl font-bold">Add text</span>
+                    </div>
+                  </Button>
+                </div>
+              </SpotlightCard>
+            </Spotlight> */}
           </DrawerTrigger>
         </div>
         <DrawerContent>

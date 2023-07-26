@@ -18,6 +18,10 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      zIndex: {
+        "60": "60",
+        "70": "70",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
