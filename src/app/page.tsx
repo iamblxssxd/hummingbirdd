@@ -2,6 +2,7 @@ import Balancer from "react-wrap-balancer"
 
 import { getAuthSession } from "@/lib/auth"
 import FeaturedTexts from "@/components/FeaturedTexts"
+import Reader from "@/components/Reader"
 import TextareaSubmit from "@/components/TextareaSubmit"
 import WordTooltip from "@/components/WordTooltip"
 
@@ -15,7 +16,8 @@ export default async function Home() {
           <div className="mb-8 flex flex-wrap gap-8">
             <FeaturedTexts />
           </div>
-          <TextareaSubmit />
+          {/* <Reader /> */}
+          {/* <TextareaSubmit /> */}
         </div>
       ) : (
         <div className="container mx-auto max-w-4xl pt-12">
