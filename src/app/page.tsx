@@ -1,6 +1,7 @@
 import Balancer from "react-wrap-balancer"
 
 import { getAuthSession } from "@/lib/auth"
+import { Textarea } from "@/components/ui/Textarea"
 import FeaturedTexts from "@/components/FeaturedTexts"
 import Reader from "@/components/Reader"
 import TextareaSubmit from "@/components/TextareaSubmit"
@@ -16,6 +17,10 @@ export default async function Home() {
           <div className="mb-8 flex flex-wrap gap-8">
             <FeaturedTexts />
           </div>
+          <Textarea
+            placeholder="Paste your text here"
+            className="h-96 resize-none"
+          />
           {/* <Reader /> */}
           {/* <TextareaSubmit /> */}
         </div>

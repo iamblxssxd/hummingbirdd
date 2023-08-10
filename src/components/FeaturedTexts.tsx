@@ -1,14 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import AddNewText from "@/components/AddNewText"
+import AddTextButton from "@/components/AddTextButton"
 
 /* TODO separate typography into components */
 
 const FeaturedTexts = () => {
   return (
     <>
-      <AddNewText />
+      <AddTextButton />
       <div className="flex max-w-full flex-1 flex-col gap-4">
         <div>
           <h2 className="text-lg font-semibold leading-6 tracking-tight">

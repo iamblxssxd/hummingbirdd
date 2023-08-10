@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -32,7 +33,6 @@ import { Textarea } from "@/components//ui/Textarea"
 import { Icons } from "@/components/Icons"
 
 // TODO create an optional author/source field
-// TODO fix onClick on the text field (it shouldn't scroll to the top of the text)
 const textFormSchema = z.object({
   title: z
     .string()
@@ -60,7 +60,9 @@ const defaultValues: TextFormValues = {
   text: "",
 }
 
-export default function AddNewText() {
+const MemoizedTextarea = React.memo(Textarea)
+
+export default function AddTextButton() {
   const { updateText } = useText()
   const router = useRouter()
 
@@ -78,7 +80,7 @@ export default function AddNewText() {
 
   return (
     <>
-      <Drawer>
+      <Drawer preventScrollRestoration={true}>
         <div className="flex w-full flex-col gap-4 lg:w-min">
           <div>
             <h2 className="text-lg font-semibold leading-6 tracking-tight">
@@ -86,7 +88,7 @@ export default function AddNewText() {
             </h2>
             <p className="text-sm text-muted-foreground">Could be any text.</p>
           </div>
-          <DrawerTrigger className="">
+          <DrawerTrigger>
             <Spotlight className="group flex w-full lg:h-full">
               <SpotlightCard>
                 <div className="relative z-10 flex h-36 w-60 overflow-hidden rounded-[inherit] bg-background lg:h-40">
@@ -146,7 +148,7 @@ export default function AddNewText() {
                     <FormItem>
                       <FormLabel>Text</FormLabel>
                       <FormControl>
-                        <Textarea
+                        <MemoizedTextarea
                           placeholder="Paste your text here"
                           className="h-full resize-none"
                           {...field}
