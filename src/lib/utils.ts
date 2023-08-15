@@ -3,26 +3,31 @@ import { twMerge } from "tailwind-merge"
 
 import { commonWords } from "@/lib/commonWords"
 
-interface WordDefinition {
+interface WordWise {
   id: string
-  wordWise: {
-    word: string
-    fullDefinition: string
-    shortDefinition: string
-    favorite: boolean
-  }
+  word: string
+  fullDefinition: string
+  shortDefinition: string
+  exampleSentence: string
+  hintLevel: string
+}
+
+export interface ApiResponse {
+  success: boolean
+  word: string
+  wordWise: WordWise | null
 }
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function filterWords(text: string): string[] | undefined {
+export function filterWords(text: string): string[] | [] {
   if (!text) {
-    return undefined
+    return []
   }
 
-  // Use a regular expression to split the text into words
+  // split the text into individual words
   const words: string[] = text.toLowerCase().match(/\b\w+\b/g) || []
 
   const filteredWords: string[] = words.filter(
@@ -34,9 +39,7 @@ export function filterWords(text: string): string[] | undefined {
   return uniqueWords
 }
 
-export async function fetchDefinition(
-  word: string
-): Promise<WordDefinition | undefined> {
+export async function fetchDefinition(word: string): Promise<ApiResponse> {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -48,16 +51,20 @@ export async function fetchDefinition(
   }
 
   try {
-    const response = await fetch(`/api/v1/wordwise`, requestOptions)
+    const response = await fetch(
+      `http://localhost:3000/api/v1/wordwise`,
+      requestOptions
+    )
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
     }
 
-    const data = await response.json()
+    const data: ApiResponse = await response.json()
 
     return data
   } catch (error) {
     console.error("Error:", error)
+    return { success: false, word: "", wordWise: null }
   }
 }

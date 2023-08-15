@@ -3,9 +3,14 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import axios, { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { type CreateTextPayload } from "@/lib/validators/text"
+import { useCustomToast } from "@/hooks/use-custom-toast"
+import { toast } from "@/hooks/use-toast"
 import { useText } from "@/hooks/useText"
 import { Button } from "@/components/ui/Button"
 import {
@@ -52,10 +57,10 @@ const textFormSchema = z.object({
     }),
 })
 
-type TextFormValues = z.infer<typeof textFormSchema>
+type FormData = z.infer<typeof textFormSchema>
 
 // This can come from the database or API.
-const defaultValues: TextFormValues = {
+const defaultValues: FormData = {
   title: "",
   text: "",
 }
@@ -65,17 +70,87 @@ const MemoizedTextarea = React.memo(Textarea)
 export default function AddTextButton() {
   const { updateText } = useText()
   const router = useRouter()
-
-  const form = useForm<TextFormValues>({
+  const form = useForm<FormData>({
     resolver: zodResolver(textFormSchema),
     defaultValues,
   })
 
-  function onSubmit(data: TextFormValues) {
-    updateText(data.text, data.title)
+  const { mutate: submitText, isLoading } = useMutation({
+    mutationFn: async ({ title, text }: FormData) => {
+      const payload: FormData = { title, text }
+
+      const { data } = await axios.post("/api/text/create", payload)
+      return data
+    },
+    // TODO handle errors
+    // onError: (err) => {
+    //   if (err instanceof AxiosError) {
+    //     console.error(err)
+    //   }
+    // },
+    onSuccess: () => {
+      toast({
+        description: "Text has been saved.",
+      })
+      router.refresh()
+    },
+  })
+  // const { loginToast } = useCustomToast()
+
+  // const { mutate: submitText, isLoading } = useMutation({
+  //   mutationFn: async () => {
+  //     const payload: CreateTextPayload = {
+  //       title: data.title,
+  //       content: readerText,
+  //     }
+
+  //     console.log(definitions)
+  //     const { data } = await axios.post("/api/text", payload)
+  //     return data as string
+  //   },
+  //   onError: (err) => {
+  //     if (err instanceof AxiosError) {
+  //       if (err.response?.status === 409) {
+  //         return toast({
+  //           title: "Text has been already added.",
+  //           description: "Please add a differente text.",
+  //           variant: "destructive",
+  //         })
+  //       }
+
+  //       if (err.response?.status === 422) {
+  //         return toast({
+  //           title: "Invalid text length",
+  //           description: "Your text must have at least 3 characters",
+  //           variant: "destructive",
+  //         })
+  //       }
+
+  //       if (err.response?.status === 401) {
+  //         return loginToast()
+  //       }
+  //     }
+  //     toast({
+  //       title: "An error occured",
+  //       description: "Could not save text.",
+  //       variant: "destructive",
+  //     })
+  //   },
+  //   onSuccess: () => {
+  //     toast({
+  //       title: "Success!",
+  //       description: "Text has been saved.",
+  //       variant: "default",
+  //     })
+  //   },
+  // })
+
+  function onSubmit(data: FormData) {
+    submitText(data)
+    // updateText(data.text, data.title)
     // TODO Generate a random ID for the text
     // router.push(`/reader?text=${encodeURIComponent(data.text)}`)
-    router.push(`/reader`)
+    // router.push(`/reader`)
   }
 
   return (
